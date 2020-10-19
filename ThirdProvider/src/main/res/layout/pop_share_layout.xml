@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.seabreeze.robot.base.widget.round.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp"
+        app:rv_backgroundColor="@android:color/white"
+        app:rv_cornerRadius_TL="20dp"
+        app:rv_cornerRadius_TR="20dp"
+        app:rv_strokeColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/tv_12_black"
+                android:layout_centerInParent="true"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:text="分享给你的好友" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:id="@+id/wechatLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    style="@style/tv_12_black"
+                    android:layout_gravity="center_horizontal"
+                    android:text="微信" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/momentsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    style="@style/tv_12_black"
+                    android:layout_gravity="center_horizontal"
+                    android:text="朋友圈" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/microblogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    style="@style/tv_12_black"
+                    android:layout_gravity="center_horizontal"
+                    android:text="QQ" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.seabreeze.robot.base.widget.round.RoundLinearLayout>
+</FrameLayout>

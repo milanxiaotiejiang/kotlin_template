@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 日语 -->
+
+
+    <!--    <string name="characters_6_20">6-20文字</string>-->
+    <string name="cancel">取り消す</string>
+    <string name="feedback">フィードバック</string>
+    <string name="consumer_hotline">お客様サポートの電話番号</string>
+    <string name="official_website">公式ウェブサイト</string>
+    <string name="photo_album">アルバム</string>
+    <string name="take_a_photo">写真を取る</string>
+    <string name="news">情報</string>
+
+    <string name="loading">読み込み中...</string>
+    <string name="one_moment_please">ちょっと待ってください</string>
+</resources>

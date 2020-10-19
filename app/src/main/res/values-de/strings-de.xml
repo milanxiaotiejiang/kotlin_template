@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 德语 -->
+
+
+    <!--    <string name="characters_6_20">6-20 Zeichen</string>-->
+    <string name="cancel">Stornieren</string>
+    <string name="feedback">Feedback</string>
+    <string name="consumer_hotline">Verbraucher-Hotline</string>
+    <string name="official_website">Offizielle Website</string>
+    <string name="photo_album">Fotoalbum</string>
+    <string name="take_a_photo">Mach ein Foto</string>
+    <string name="news">Nachrichten</string>
+
+    <string name="loading">Wird geladen...</string>
+    <string name="one_moment_please">Einen Moment bitte</string>
+</resources>

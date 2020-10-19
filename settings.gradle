@@ -1,0 +1,4 @@
+include ':ThirdProvider'
+rootProject.name = "kotlin_template"
+include ':app', ':DataProvider', ':BaseLibrary',
+        ':fragmentation', 'fragmentation_core'

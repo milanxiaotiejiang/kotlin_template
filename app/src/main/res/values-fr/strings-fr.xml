@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 法语 -->
+
+
+    <!--    <string name="characters_6_20">6-20 caractères</string>-->
+    <string name="cancel">Annuler</string>
+    <string name="feedback">Feedback</string>
+    <string name="consumer_hotline">Hotline public</string>
+    <string name="official_website">Site officiel</string>
+    <string name="photo_album">Album photo</string>
+    <string name="take_a_photo">Prendre une photo</string>
+    <string name="news">Nouvelles</string>
+
+    <string name="loading">Chargement en cours...</string>
+    <string name="one_moment_please">Un instant</string>
+</resources>

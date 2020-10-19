@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.glide.GlideActivity">
+
+    <TextView
+        android:id="@+id/tvLoad"
+        style="@style/normal_bottom_button"
+        android:layout_marginTop="50dp"
+        android:text="图片加载" />
+
+    <TextView
+        android:id="@+id/tvClear"
+        style="@style/normal_bottom_button"
+        android:layout_marginTop="50dp"
+        android:text="缓存清理" />
+
+    <TextView
+        android:id="@+id/tvSize"
+        style="@style/normal_bottom_button"
+        android:layout_marginTop="50dp"
+        android:text="缓存大小" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp" />
+</LinearLayout>

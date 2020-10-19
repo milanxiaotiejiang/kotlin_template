@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SoundView">
+        <attr name="stroke_width" format="dimension" />
+        <attr name="sound_rotation" format="float" />
+        <attr name="additional" format="dimension" />
+        <attr name="bright_progress" format="float" />
+        <attr name="sound_delay_time" format="integer" />
+        <attr name="sound_text" format="string" />
+        <attr name="sound_text_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="BatteryView">
+        <attr name="battery_percent" format="integer" />
+        <attr name="battery_color" format="color" />
+    </declare-styleable>
+
+    <!--AutoLinkStyleTextView-->
+    <declare-styleable name="AutoLinkStyleTextView">
+        <attr name="AutoLinkStyleTextView_text_value" format="string|reference" />
+        <attr name="AutoLinkStyleTextView_default_color" format="color|reference" />
+        <attr name="AutoLinkStyleTextView_has_under_line" format="boolean" />
+        <attr name="AutoLinkStyleTextView_start_image" format="reference" />
+        <attr name="AutoLinkStyleTextView_type">
+            <enum name="start_image" value="0" />
+            <enum name="content_text" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 中文 -->
+
+    <!--    <string name="characters_6_20">6–20个字符</string>-->
+    <string name="cancel">取消</string>
+    <string name="feedback">问题反馈</string>
+    <string name="consumer_hotline">客服电话</string>
+    <string name="official_website">官网</string>
+    <string name="photo_album">相册</string>
+    <string name="take_a_photo">拍照</string>
+    <string name="news">消息</string>
+
+    <string name="loading">正在加载中...</string>
+    <string name="one_moment_please">请稍等</string>
+
+</resources>

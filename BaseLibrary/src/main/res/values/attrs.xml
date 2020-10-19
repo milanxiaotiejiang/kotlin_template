@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="SwipeBackLayoutStyle" format="reference" />
+
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_flag">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="all" value="3" />
+        </attr>
+        <attr name="shadow_left" format="reference" />
+        <attr name="shadow_right" format="reference" />
+        <attr name="shadow_bottom" format="reference" />
+    </declare-styleable>
+
+    <!--    鸿洋水平数字Progressbar-->
+    <declare-styleable name="HorizontalProgressBarWithNumber">
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--HorizontalStyle-->
+    <declare-styleable name="HorizontalProgressView">
+        <attr name="track_width" format="dimension" />
+        <attr name="start_progress" format="integer" />
+        <attr name="end_progress" format="integer" />
+        <attr name="start_color" format="color" />
+        <attr name="end_color" format="color" />
+        <attr name="isTracked" format="boolean" />
+        <attr name="trackColor" format="color" />
+        <attr name="progressTextColor" format="color" />
+        <attr name="progressDuration" format="integer" />
+        <attr name="progressTextVisibility" format="boolean" />
+        <attr name="progressTextSize" format="dimension" />
+        <attr name="animateType">
+            <enum name="AccelerateDecelerateInterpolator" value="0" />
+            <enum name="LinearInterpolator" value="1" />
+            <enum name="AccelerateInterpolator" value="2" />
+            <enum name="DecelerateInterpolator" value="3" />
+            <enum name="OvershootInterpolator" value="4" />
+        </attr>
+        <attr name="corner_radius" format="dimension" />
+        <attr name="text_padding_bottom" format="dimension" />
+        <attr name="textMovedEnable" format="boolean" />
+    </declare-styleable>
+
+    <!--CircleStyle-->
+    <declare-styleable name="CircleProgressView">
+        <attr name="track_width" />
+        <attr name="start_progress" />
+        <attr name="end_progress" />
+        <attr name="start_color" />
+        <attr name="end_color" />
+        <attr name="isTracked" />
+        <attr name="trackColor" />
+        <attr name="progressDuration" />
+        <attr name="progressTextVisibility" />
+        <attr name="progressBriefText" format="string" />
+        <attr name="progressTextColor" />
+        <attr name="progressBriefTextColor" format="color" />
+        <attr name="progressTextSize" />
+        <attr name="progressBriefTextSize" format="dimension" />
+        <attr name="animateType" />
+        <attr name="isFilled" format="boolean" />
+        <attr name="circleBroken" format="boolean" />
+        <attr name="isGraduated" format="boolean" />
+        <attr name="scaleZone_width" format="dimension" />
+        <attr name="scaleZone_length" format="dimension" />
+        <attr name="scaleZone_corner_radius" format="dimension" />
+        <attr name="scaleZone_padding" format="dimension" />
+    </declare-styleable>
+
+    <dimen name="default_trace_width">16dp</dimen>
+    <dimen name="default_progress_text_size">28sp</dimen>
+    <dimen name="default_progress_brief_text_size">20sp</dimen>
+    <dimen name="default_corner_radius">5dp</dimen>
+    <dimen name="default_horizontal_text_size">14sp</dimen>
+    <dimen name="default_zone_length">22dp</dimen>
+    <dimen name="default_zone_width">6dp</dimen>
+    <dimen name="default_zone_padding">16dp</dimen>
+    <dimen name="default_zone_corner_radius">8dp</dimen>
+
+
+    <!--    水波纹效果 （以下两个）-->
+    <declare-styleable name="MultiWaveHeader">
+        <attr name="mwhWaveHeight" format="dimension" />
+        <attr name="mwhStartColor" format="color" />
+        <attr name="mwhCloseColor" format="color" />
+        <attr name="mwhIsRunning" format="boolean" />
+        <attr name="mwhEnableFullScreen" format="boolean" />
+        <attr name="mwhColorAlpha" format="fraction|float" />
+        <attr name="mwhProgress" format="fraction|float" />
+        <attr name="mwhVelocity" format="fraction|float" />
+        <attr name="mwhGradientAngle" format="integer" />
+        <attr name="mwhCornerRadius" format="dimension" />
+        <attr name="mwhShape">
+            <enum name="Rect" value="0" />
+            <enum name="RoundRect" value="1" />
+            <enum name="Oval" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DiffuseView">
+        <attr name="diffuse_color" format="color" />
+        <attr name="diffuse_coreColor" format="color" />
+        <attr name="diffuse_coreImage" format="reference" />
+        <attr name="diffuse_coreRadius" format="float" />
+        <attr name="diffuse_width" format="integer" />
+        <attr name="diffuse_maxWidth" format="integer" />
+        <attr name="diffuse_speed" format="integer" />
+        <attr name="diffuse_alpha_speed" format="integer" />
+    </declare-styleable>
+
+    <!--    swipe 滑动删除-->
+    <declare-styleable name="SwipeLayout">
+        <attr name="drag_edge">
+            <flag name="left" value="1" />
+            <flag name="right" value="2" />
+            <flag name="top" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+        <attr name="leftEdgeSwipeOffset" format="dimension" />
+        <attr name="rightEdgeSwipeOffset" format="dimension" />
+        <attr name="topEdgeSwipeOffset" format="dimension" />
+        <attr name="bottomEdgeSwipeOffset" format="dimension" />
+        <attr name="show_mode" format="enum">
+            <enum name="lay_down" value="0" />
+            <enum name="pull_out" value="1" />
+        </attr>
+        <attr name="clickToClose" format="boolean" />
+    </declare-styleable>
+
+    <!--    状态按钮-->
+    <declare-styleable name="StateButton">
+        <!--text color-->
+        <attr name="normalTextColor" format="color|reference" />
+        <attr name="pressedTextColor" format="color|reference" />
+        <attr name="unableTextColor" format="color|reference" />
+
+        <!--stroke width and color, dash width, dash gap-->
+        <attr name="strokeDashWidth" format="dimension|reference" />
+        <attr name="strokeDashGap" format="dimension|reference" />
+        <attr name="normalStrokeWidth" format="dimension|reference" />
+        <attr name="pressedStrokeWidth" format="dimension|reference" />
+        <attr name="unableStrokeWidth" format="dimension|reference" />
+        <attr name="normalStrokeColor" format="color|reference" />
+        <attr name="pressedStrokeColor" format="color|reference" />
+        <attr name="unableStrokeColor" format="color|reference" />
+
+        <!--background color-->
+        <attr name="normalBackgroundColor" format="color|reference" />
+        <attr name="pressedBackgroundColor" format="color|reference" />
+        <attr name="unableBackgroundColor" format="color|reference" />
+
+        <!--background radius-->
+        <attr name="radius" format="dimension|reference" />
+        <attr name="state_round" format="boolean|reference" />
+
+        <!--animation duration-->
+        <attr name="animationDuration" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="StateImageView">
+        <attr name="normalBackground" format="color|reference" />
+        <attr name="pressedBackground" format="color|reference" />
+        <attr name="unableBackground" format="color|reference" />
+
+        <!--animation duration-->
+        <attr name="AnimationDuration" format="integer|reference" />
+    </declare-styleable>
+
+    <!--    验证码控件-->
+    <declare-styleable name="VerCodeEditText">
+        <attr name="figures" format="integer" />
+        <attr name="verCodeMargin" format="dimension" />
+        <attr name="bottomLineSelectedColor" format="reference" />
+        <attr name="bottomLineNormalColor" format="reference" />
+        <attr name="bottomLineHeight" format="dimension" />
+        <attr name="selectedBackgroundColor" format="reference" />
+        <attr name="cursorDuration" format="integer" />
+        <attr name="cursorWidth" format="dimension" />
+        <attr name="cursorColor" format="color|reference" />
+    </declare-styleable>
+
+    <!--AutoLinkStyleTextView-->
+    <declare-styleable name="AutoLinkStyleTextView">
+        <attr name="AutoLinkStyleTextView_text_value" format="string|reference" />
+        <attr name="AutoLinkStyleTextView_default_color" format="color|reference" />
+        <attr name="AutoLinkStyleTextView_has_under_line" format="boolean" />
+        <attr name="AutoLinkStyleTextView_start_image" format="reference" />
+        <attr name="AutoLinkStyleTextView_type">
+            <enum name="start_image" value="0" />
+            <enum name="content_text" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

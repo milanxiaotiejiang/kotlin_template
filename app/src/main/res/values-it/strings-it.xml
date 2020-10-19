@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 意大利语 -->
+
+
+    <!--    <string name="characters_6_20">6-20 caratteri</string>-->
+    <string name="cancel">Annulla</string>
+    <string name="feedback">Domanda feedback</string>
+    <string name="consumer_hotline">Telefono di Servizio clienti</string>
+    <string name="official_website">Sito ufficiale</string>
+    <string name="photo_album">Galleria</string>
+    <string name="take_a_photo">Fai una foto</string>
+    <string name="news">Messagi</string>
+
+    <string name="loading">Caricamento in corso...</string>
+    <string name="one_moment_please">Un momento, per favore</string>
+</resources>

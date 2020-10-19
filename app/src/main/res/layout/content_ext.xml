@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.ext.ExtActivity"
+    tools:showIn="@layout/activity_ext">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onAppExt"
+            android:text="AppExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onBrightnessExt"
+            android:text="BrightnessExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onCommonExt"
+            android:text="CommonExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onDensityExt"
+            android:text="DensityExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onEventUtils"
+            android:text="EventUtils 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onKeyboardExt"
+            android:text="KeyboardExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onMd5Ext"
+            android:text="Md5Ext 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onMmkvExt"
+            android:text="MmkvExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onNetworkExt"
+            android:text="NetworkExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onNumberExt"
+            android:text="NumberExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onRegexExt"
+            android:text="RegexExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onResourceExt"
+            android:text="ResourceExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onScreenExt"
+            android:text="ScreenExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onSpanExt"
+            android:text="SpanExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onTimeExt"
+            android:text="TimeExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onViewExt"
+            android:text="ViewExt 示例" />
+
+        <TextView
+            style="@style/normal_bottom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:onClick="onViewPrefs"
+            android:text="Prefs 示例" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

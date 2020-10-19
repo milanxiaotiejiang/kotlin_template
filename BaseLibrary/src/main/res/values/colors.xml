@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="light_orange">#FFC288</color>
+    <color name="dark_orange">#FF8F5D</color>
+    <color name="default_track_color">#f3e5dd</color>
+
+    <color name="picture_color_light_grey">#999999</color>
+</resources>

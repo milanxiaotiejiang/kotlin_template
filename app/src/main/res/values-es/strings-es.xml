@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 西班牙语 -->
+
+    <!--    <string name="characters_6_20">6 -20 caracteres</string>-->
+    <string name="cancel">Cancelar</string>
+    <string name="feedback">Retroalimentación</string>
+    <string name="consumer_hotline">Línea directa para consumidores</string>
+    <string name="official_website">Sitio web oficial</string>
+    <string name="photo_album">Album de fotos</string>
+    <string name="take_a_photo">Toma una foto</string>
+    <string name="news">Noticias</string>
+
+    <!--    <string name="email_has_not">邮箱格式无效</string>-->
+
+    <string name="loading">Cargando...</string>
+    <string name="one_moment_please">Un momento</string>
+</resources>

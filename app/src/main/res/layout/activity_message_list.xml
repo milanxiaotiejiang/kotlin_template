@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.message.MessageListActivity">
+
+    <com.wuhenzhizao.titlebar.widget.CommonTitleBar
+        android:id="@+id/commonTitleBar"
+        style="@style/CommonTitleBarStyle"
+        app:centerText="@string/news"
+        app:centerType="textView"
+        app:leftImageResource="@mipmap/ic_back_b"
+        app:leftType="imageButton"
+        app:rightType="textView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBg"
+        android:paddingLeft="@dimen/margin_standard"
+        android:paddingTop="@dimen/margin_standard"
+        android:paddingRight="@dimen/margin_standard"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+</LinearLayout>
