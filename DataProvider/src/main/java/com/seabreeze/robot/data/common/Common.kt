@@ -20,6 +20,8 @@ class Common {
         //ZFB WX
         const val ZFB = "ZFB"
         const val WX = "WX"
+
+        const val SYNTHESIZER_AUE_PARAM = 6
     }
 
 }
