@@ -187,7 +187,8 @@ dependencies {
     api "com.github.ssseasonnn:RxDownload:1.0.9"
 
     //权限 https://github.com/tbruyelle/RxPermissions
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+//    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.permissionx.guolindev:permissionx:1.4.0'
 
     //改为xlog 系统保存日志文件 https://github.com/elvishew/XLog/blob/master/README_ZH.md
     api 'com.elvishew:xlog:1.6.1'
@@ -229,7 +230,10 @@ dependencies {
 //    api  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
 //    api  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
 //    api  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-//    api  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+    api  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+
+    //阴影
+    api 'com.github.lihangleo2:ShadowLayout:3.1.2'
 
     //animator
 //    api 'com.github.florent37:viewanimator:1.1.0'
