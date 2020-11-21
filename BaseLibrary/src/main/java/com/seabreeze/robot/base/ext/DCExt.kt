@@ -1,6 +1,6 @@
 package com.seabreeze.robot.base.ext
 
-import com.seabreeze.robot.base.error.CustomThrowable
+import com.seabreeze.robot.base.error.BaseThrowable
 import com.seabreeze.robot.base.model.BaseResult
 import com.seabreeze.robot.base.model.Either
 
@@ -14,7 +14,8 @@ import com.seabreeze.robot.base.model.Either
  * </pre>
  */
 inline fun <reified T> BaseResult<T>.dcEither() =
-    when (resultStatus) {
-        true -> Either.left(resultData)
-        false -> Either.right(CustomThrowable(errorCode, errorMessage))
+    resultStatus.yes {
+        Either.left(resultData)
+    }.otherwise {
+        Either.right(BaseThrowable(errorCode, errorMessage))
     }

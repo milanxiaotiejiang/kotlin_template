@@ -5,7 +5,7 @@ package com.seabreeze.robot.base.error
  * Time: 2020/4/20 19:25
  * Des:
  */
-class CustomThrowable(
+class BaseThrowable(
     val errorCode: String,
     val errorMessage: String
 ) : Throwable(errorMessage)

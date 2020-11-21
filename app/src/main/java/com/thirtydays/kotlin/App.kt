@@ -43,7 +43,16 @@ class App : DataApplication() {
 
 //        initActivityLifecycleCallbacks()
 
-        RxJavaPlugins.setErrorHandler { throwable: Throwable -> XLog.e("App " + throwable.message) }
+        RxJavaPlugins.setErrorHandler { throwable: Throwable ->
+            XLog.e(
+                """
+                        ========================================================================================================
+                        $throwable  
+                        ${throwable.cause}${throwable.message}
+                        ========================================================================================================
+                    """
+            )
+        }
 
 //        SoUtils.initAssetsFile(this)
     }

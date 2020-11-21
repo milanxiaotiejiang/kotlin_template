@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ui.simple.SimpleExampleActivity">
+
+    <TextView
+        android:id="@+id/tvSimple"
+        style="@style/normal_bottom_button"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="Simple 示例" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp" />
+
+</LinearLayout>

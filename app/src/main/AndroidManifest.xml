@@ -48,6 +48,7 @@
         <activity android:name=".ui.ext.ExtActivity" />
         <activity android:name=".ui.loadpage.CommodityActivity" />
         <activity android:name=".ui.glide.GlideActivity" />
+        <activity android:name=".ui.simple.SimpleExampleActivity" />
     </application>
 
 </manifest>

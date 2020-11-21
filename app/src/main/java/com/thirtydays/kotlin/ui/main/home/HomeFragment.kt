@@ -15,6 +15,7 @@ import com.thirtydays.kotlin.ui.hook.HookActivity
 import com.thirtydays.kotlin.ui.hook.RoomActivity
 import com.thirtydays.kotlin.ui.loadpage.CommodityActivity
 import com.thirtydays.kotlin.ui.message.MessageListActivity
+import com.thirtydays.kotlin.ui.simple.SimpleExampleActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
@@ -26,7 +27,15 @@ class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
     override fun requestData() {
 
         val adapter = HomeAdapter(
-            mutableListOf("retrofit 测试", "room 测试", "Java Hook", "Ext 测试", "刷新加载页面", "Glide")
+            mutableListOf(
+                "retrofit 测试",
+                "room 测试",
+                "Java Hook",
+                "Ext 测试",
+                "刷新加载页面",
+                "Glide",
+                "极简单的页面请求"
+            )
         )
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(
@@ -43,6 +52,7 @@ class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
                 3 -> pop<ExtActivity>()
                 4 -> pop<CommodityActivity>()
                 5 -> pop<GlideActivity>()
+                6 -> pop<SimpleExampleActivity>()
             }
         }
 

@@ -1,29 +1,27 @@
 package com.seabreeze.robot.base.ui.activity
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.launcher.ARouter
 import com.elvishew.xlog.XLog
 import com.gyf.immersionbar.ImmersionBar
 import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.ext.postEvent
 import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.model.CoroutineState
 import com.seabreeze.robot.base.model.TokenInvalidEvent
 import com.seabreeze.robot.base.router.startMain
-import com.seabreeze.robot.base.vm.BaseRepository
-import com.seabreeze.robot.base.vm.BaseViewModel
 import com.seabreeze.robot.base.vm.ModelView
 import retrofit2.HttpException
 
-abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel : BaseViewModel<Repository>> :
-    InternationalizationActivity(), ModelView {
-
-    val mViewModel: ViewModel by lazy {
-        createViewModel()
-    }
-
-    abstract fun createViewModel(): ViewModel
+/**
+ * <pre>
+ * @user : milanxiaotiejiang
+ * @email : 765151629@qq.com
+ * @version : 1.0
+ * @date : 2020/11/21
+ * @description : TODO
+</pre> *
+ */
+abstract class SimpleActivity : InternationalizationActivity(), ModelView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +35,6 @@ abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel :
             setImmersionBar()
         }
 
-        initViewModelActions()
-        initViewModel()
         initData()
     }
 
@@ -67,26 +63,6 @@ abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel :
     }
 
     protected abstract fun getLayoutId(): Int
-
-    private fun initViewModelActions() {
-        mViewModel.statusLiveData.observe(this, Observer { status ->
-            status?.run {
-                when (this) {
-                    CoroutineState.START -> {
-                        showLoading()
-                    }
-                    CoroutineState.FINISH -> {
-                        hideLoading()
-                    }
-                    CoroutineState.ERROR -> {
-                        hideLoading()
-                    }
-                }
-            }
-        })
-    }
-
-    protected abstract fun initViewModel()
 
     protected abstract fun initData()
 

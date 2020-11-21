@@ -6,20 +6,18 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AccountPO(
     val accountId: Int,
-    val accountStatus: AccountStatus,
+    val accountStatus: String,
     var accountToken: String,
+    val accountType: String,
+    val adminStatus: Boolean,
     val avatar: String,
     val createTime: String,
-    val deleteStatus: Boolean,
+    val deletedState: Boolean,
     val email: String,
-    val eqId: Int,
-    val gender: Gender,
     val nickname: String,
     val password: String,
-    val phoneNumber: String,
-    val accountType: AccountType,
-    val adminStatus: Boolean,
-    var subscriptionStatus: Boolean
+    var subscriptionStatus: Boolean,
+    val updateTime: String
 ) : Parcelable
 
 enum class AccountStatus(val code: String, val desc: String) {

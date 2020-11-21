@@ -1,3 +1,5 @@
+@file:JvmName("ToastUtil")
+
 package com.seabreeze.robot.base.ext
 
 import android.content.Context
