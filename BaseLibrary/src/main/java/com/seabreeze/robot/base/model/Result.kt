@@ -31,12 +31,3 @@ data class Pager<T>(
     val total: Int,
     var pageTime: Long
 )
-
-data class Upload(
-    val accessKeyId: String,
-    val securityToken: String,
-    val bucket: String,
-    val accessKeySecret: String,
-    val region: String
-)
-

@@ -10,10 +10,10 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
+import com.permissionx.guolindev.PermissionX
 import com.seabreeze.robot.base.ext.toast
 import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
 import com.seabreeze.robot.data.utils.image.GlideEngine
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.ChoseImage
 import com.thirtydays.kotlin.adapter.ChoseImageAdapter
@@ -30,14 +30,11 @@ import java.io.File
  */
 class GlideActivity : RxAppCompatActivity() {
 
-    private lateinit var rxPermissions: RxPermissions
     private val mAdapter = ChoseImageAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_glide)
-
-        rxPermissions = RxPermissions(this)
 
         tvLoad.setOnClickListener {
             showPopWindow()
@@ -140,10 +137,10 @@ class GlideActivity : RxAppCompatActivity() {
                 .isCompress(true)
                 .forResult(PictureConfig.CHOOSE_REQUEST)
         }, {
-            rxPermissions
-                .request(Manifest.permission.CAMERA)
-                .subscribe { granted ->
-                    if (granted) {
+            PermissionX.init(this)
+                .permissions(Manifest.permission.CAMERA)
+                .request { allGranted, _, _ ->
+                    if (allGranted) {
                         PictureSelector.create(this)
                             .openCamera(PictureMimeType.ofImage())
                             .imageEngine(GlideEngine.INSTANCE)

@@ -1,5 +1,6 @@
-package com.seabreeze.robot.base.utils
+package com.thirtydays.lanlinghui.ext
 
+import android.content.Context
 import com.alibaba.sdk.android.oss.ClientConfiguration
 import com.alibaba.sdk.android.oss.ClientException
 import com.alibaba.sdk.android.oss.OSSClient
@@ -9,64 +10,58 @@ import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
-import com.elvishew.xlog.XLog
-import com.seabreeze.robot.base.common.AppContext
-import com.seabreeze.robot.base.ext.currentTimeMillis
-import com.seabreeze.robot.base.model.Upload
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
+import java.util.concurrent.CountDownLatch
 
 /**
  * <pre>
- * @user : milanxiaotiejiang
- * @email : 765151629@qq.com
- * @version : 1.0
- * @date : 2020/9/30
- * @description : milanxiaotiejiang
- * </pre>
+ * author : xinha
+ * e-mail : xinhai.yao@qq.com
+ * time   : 2020/07/08
+ * desc   : xm 描述:
+</pre> *
  */
-private val long = System.currentTimeMillis()
+data class Upload(
+    val accessKeyId: String,
+    val accessKeySecret: String,
+    var bucket: String,
+    var region: String,
+    val stsToken: String
+)
 
-fun main() {
-    runBlocking {
-        val processAllPages = processAllPages()
-        println("processAllPages $processAllPages")
-        println("完成 ${System.currentTimeMillis() - long}")
+/**
+ * 解决java调用问题
+ */
+@JvmName("uploadMultipleFile")
+fun Context.uploadMultipleFile(upload: Upload, files: List<File>): MutableList<UploadResult> {
+    val latch = CountDownLatch(1)
+    val runBlocking = runBlocking {
+        val uploadMultipleFile = OSS.INSTANCE.uploadMultipleFile(
+            this@uploadMultipleFile, upload, files
+        )
+        latch.countDown()
+        return@runBlocking uploadMultipleFile
     }
+    latch.await()
+    return runBlocking
 }
 
-suspend fun processAllPages() = withContext(Dispatchers.IO) {
-    println("开始 ${System.currentTimeMillis() - long}")
-    val jobs = mutableListOf<Int>()
-    val job1 = async {
-        processPages(1)
+fun List<UploadResult>.combination(): String {
+    var picture = ""
+    if (size > 0) {
+        val sb = StringBuilder()
+        for (uploadResult in this) {
+            uploadResult.ossUrl?.let {
+                sb.append(",").append(it)
+            }
+        }
+        if (sb.toString().startsWith(",")) {
+            picture = sb.substring(1, sb.toString().length)
+        }
     }
-    val job2 = async {
-        processPages(2)
-    }
-    val job3 = async {
-        processPages(3)
-    }
-//    jobs.add(job1)
-//    jobs.add(job2)
-//    jobs.add(job3)
-
-    val await1 = job1.await()
-    val await2 = job2.await()
-    val await3 = job3.await()
-    println("$await1 $await2 $await3")
-    jobs.add(await1)
-    jobs.add(await2)
-    jobs.add(await3)
-    jobs
-}
-
-fun processPages(number: Int): Int {
-    println("number $number ${System.currentTimeMillis() - long}")
-    Thread.sleep((1000 * number).toLong())
-    println("number $number ${System.currentTimeMillis() - long}")
-    return number * 33
+    return picture
 }
 
 class OSS private constructor() {
@@ -74,10 +69,11 @@ class OSS private constructor() {
     private lateinit var ossClient: OSSClient
 
     private fun initOSS(
+        context: Context,
         accessKeyId: String,
         accessKeySecret: String,
         endPoint: String,
-        token: String
+        token: String,
     ) {
         // 在移动端建议使用STS的方式初始化OSSClient。
         val credentialProvider = OSSStsTokenCredentialProvider(
@@ -90,30 +86,33 @@ class OSS private constructor() {
         conf.socketTimeout = 15 * 1000 // socket超时，默认15秒。
         conf.maxConcurrentRequest = 5 // 最大并发请求书，默认5个。
         conf.maxErrorRetry = 2 // 失败后最大重试次数，默认2次。
-        ossClient = OSSClient(AppContext, endPoint, credentialProvider, conf)
+        ossClient = OSSClient(context, endPoint, credentialProvider, conf)
     }
 
 
     suspend fun uploadMultipleFile(
+        context: Context,
         upload: Upload,
-        files: List<String>,
+        files: List<File>
     ): MutableList<UploadResult> {
         if (!this@OSS::ossClient.isInitialized) {
             initOSS(
+                context,
                 upload.accessKeyId,
                 upload.accessKeySecret,
                 upload.region + ".aliyuncs.com",
-                upload.securityToken
+                upload.stsToken
             )
         }
-
+        if (files.isEmpty()) {
+            return mutableListOf()
+        }
         return withContext(Dispatchers.IO) {
 
             val deferredList = mutableListOf<Deferred<UploadResult>>()
-            val currentTimeMillis1 = currentTimeMillis
-            files.forEach { path ->
+            files.forEach { file ->
                 val deferred = async {
-                    val file = File(path)
+
                     val result = UploadResult(file.name)
                     if (file.exists()) {
                         // 构造上传请求。
@@ -128,6 +127,9 @@ class OSS private constructor() {
                                 .split("\\?".toRegex())
                                 .toTypedArray()[0]
                             result.ossUrl = url
+//                            result.ossUrl =
+//                                    url.replace("http://xiaofu30days.oss-cn-beijing.aliyuncs.com",
+//                                            "https://battery-cdn.30days-tech.com")
                         } else {
                             result.error = UploadThrowable("statusCode is ${putObject.statusCode}")
                         }
@@ -142,24 +144,25 @@ class OSS private constructor() {
             deferredList.forEach {
                 resultList.add(it.await())
             }
-            XLog.e(currentTimeMillis - currentTimeMillis1)
             resultList
         }
     }
 
     fun uploadSingleFile(
+        context: Context,
         upload: Upload,
         file: File,
         success: (errorMsg: String) -> Unit,
         failure: (errorMsg: String) -> Unit = { _ -> },
-        progress: (request: PutObjectRequest, currentSize: Long, totalSize: Long) -> Unit = { _, _, _ -> }
+        progress: (request: PutObjectRequest, currentSize: Long, totalSize: Long) -> Unit = { _, _, _ -> },
     ) {
         if (!this@OSS::ossClient.isInitialized) {
             initOSS(
+                context,
                 upload.accessKeyId,
                 upload.accessKeySecret,
                 upload.region + ".aliyuncs.com",
-                upload.securityToken
+                upload.stsToken
             )
         }
 
@@ -188,7 +191,7 @@ class OSS private constructor() {
                 override fun onFailure(
                     request: PutObjectRequest?,
                     clientException: ClientException?,
-                    serviceException: ServiceException?
+                    serviceException: ServiceException?,
                 ) {
                     failure(clientException?.message + " " + serviceException?.rawMessage)
                 }
@@ -207,5 +210,5 @@ class UploadThrowable(errorMsg: String) : Throwable(errorMsg)
 data class UploadResult(
     val key: String,
     var ossUrl: String? = null,
-    var error: UploadThrowable? = null
+    var error: UploadThrowable? = null,
 )
