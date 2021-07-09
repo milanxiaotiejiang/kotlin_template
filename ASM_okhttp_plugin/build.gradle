@@ -1,0 +1,46 @@
+apply plugin: 'groovy'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:4.1.0'
+    implementation 'com.android.tools.build:gradle-api:4.1.0'
+    //noinspection GradleDependency
+    implementation 'org.ow2.asm:asm:7.1'
+    //noinspection GradleDependency
+    implementation 'org.ow2.asm:asm-util:7.1'
+    //noinspection GradleDependency
+    implementation 'org.ow2.asm:asm-commons:7.1'
+    implementation project(path: ':ASM_Transform')
+}
+
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'ASM_okhttp_plugin'
+
+    publishedGroupId = 'com.seabreeze.robot'
+    libraryName = 'ASM_okhttp_plugin'
+    artifact = 'ASM_okhttp_plugin'
+
+    libraryDescription = 'A fast, incremental, cocurrent framework to develop compile plugin for android project'
+
+    siteUrl = 'https://github.com/milanxiaotiejiang/kotlin_template'
+    gitUrl = 'https://github.com/milanxiaotiejiang/kotlin_template.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'seabreeze'
+    developerName = 'seabreeze'
+    developerEmail = 'seabreeze@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}

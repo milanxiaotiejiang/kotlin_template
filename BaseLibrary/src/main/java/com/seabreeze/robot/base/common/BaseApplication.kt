@@ -14,6 +14,7 @@ import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.seabreeze.robot.base.common.Settings.language_status
 import com.seabreeze.robot.base.ext.initWebViewDataDirectory
 import com.seabreeze.robot.base.hook.epic.initHookImageView
 import com.seabreeze.robot.base.hook.epic.initHookThread
@@ -76,7 +77,7 @@ open class BaseApplication : MultiDexApplication() {
         CrashReport.initCrashReport(this, "d40d0616af", false)
 //        CrashReport.setIsDevelopmentDevice(this, BuildConfig.DEBUG)
 
-        Settings.language_status.let {
+        language_status.let {
             LanguageHelper.switchLanguage(this, it, isForce = true)
         }
 

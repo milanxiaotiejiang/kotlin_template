@@ -1,0 +1,46 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:4.1.0'
+    implementation 'com.android.tools.build:gradle-api:4.1.0'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.ow2.asm:asm:7.1'
+    implementation 'org.ow2.asm:asm-util:7.1'
+    implementation 'org.ow2.asm:asm-commons:7.1'
+}
+
+repositories {
+    maven {
+        url uri('../repo')
+    }
+    google()
+    jcenter()
+    mavenCentral()
+}
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'ASM_Transform'
+
+    publishedGroupId = 'com.seabreeze.robot'
+    libraryName = 'ASM_Transform'
+    artifact = 'ASM_Transform'
+
+    libraryDescription = 'A fast, incremental, cocurrent framework to develop compile plugin for android project'
+
+    siteUrl = 'https://github.com/milanxiaotiejiang/kotlin_template'
+    gitUrl = 'https://github.com/milanxiaotiejiang/kotlin_template.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'seabreeze'
+    developerName = 'seabreeze'
+    developerEmail = 'seabreeze@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}

@@ -60,6 +60,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     api project(path: ':BaseLibrary')
+    implementation project(path: ':ASM_okhttp_library')
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
@@ -69,3 +70,20 @@ dependencies {
 
     kapt 'androidx.room:room-compiler:2.2.5'
 }
+
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenLocal()
+    }
+    dependencies {
+//        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.seabreeze.robot:ASM_Transform:1.0.0'
+//        classpath '/ASM_okhttp_plugin'
+//        classpath project(path: ':ASM_Transform')
+//        classpath project(path: ':ASM_okhttp_plugin')
+    }
+}
+
+apply plugin: 'ASM_okhttp'
