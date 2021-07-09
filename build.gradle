@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.10"
+    ext.kotlin_version = "1.4.32"
 
     ext.compile_sdk_version = 30
     ext.build_tools_version = '30.0.0'
@@ -15,7 +15,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -27,6 +27,8 @@ buildscript {
 
 //        classpath 'me.ele:lancet-plugin:1.0.5'
         classpath 'com.google.gms:google-services:4.3.3'
+
+//        classpath 'com.seabreeze.robot:ASM_okhttp_plugin:1.0.0'
     }
 }
 
