@@ -35,7 +35,12 @@ abstract class ViewBindingFragment<VB : ViewBinding> : BaseFragment() {
             }
 
             bindClass?.let {
-                val method = it.getMethod("inflate", LayoutInflater::class.java)
+                val method = it.getMethod(
+                    "inflate",
+                    LayoutInflater::class.java,
+                    ViewGroup::class.java,
+                    Boolean::class.java
+                )
                 mViewBinding = method.invoke(null, layoutInflater, container, false) as VB
             }
         }
