@@ -3,9 +3,9 @@ package com.seabreeze.robot.third.ext
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
-import com.tencent.mm.opensdk.modelmsg.*
+import androidx.appcompat.app.AppCompatActivity
 import com.seabreeze.robot.third.ext.WxPay.createWx
+import com.tencent.mm.opensdk.modelmsg.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -22,7 +22,7 @@ SendMessageToWX.Req.WXSceneFavorite
 
 private const val THUMB_SIZE: Int = 150
 
-fun RxAppCompatActivity.shareWxText(
+fun AppCompatActivity.shareWxText(
     text: String,
     title: String = "",
     description: String = "",
@@ -45,7 +45,7 @@ fun RxAppCompatActivity.shareWxText(
     createWx()?.sendReq(req)
 }
 
-fun RxAppCompatActivity.shareWxImg(
+fun AppCompatActivity.shareWxImg(
     bmp: Bitmap,
     scene: Int = SendMessageToWX.Req.WXSceneSession
 ) {
@@ -63,7 +63,7 @@ fun RxAppCompatActivity.shareWxImg(
     createWx()?.sendReq(req)
 }
 
-fun RxAppCompatActivity.shareWxImg(
+fun AppCompatActivity.shareWxImg(
     path: String,
     scene: Int = SendMessageToWX.Req.WXSceneSession
 ) {
@@ -88,7 +88,7 @@ fun RxAppCompatActivity.shareWxImg(
     createWx()?.sendReq(req)
 }
 
-fun RxAppCompatActivity.shareWxMusic(
+fun AppCompatActivity.shareWxMusic(
     musicUrl: String,
     title: String = "",
     description: String = "",
@@ -112,7 +112,7 @@ fun RxAppCompatActivity.shareWxMusic(
     createWx()?.sendReq(req)
 }
 
-fun RxAppCompatActivity.shareWxVideo(
+fun AppCompatActivity.shareWxVideo(
     videoUrl: String,
     title: String = "",
     description: String = "",
@@ -139,7 +139,7 @@ fun RxAppCompatActivity.shareWxVideo(
     createWx()?.sendReq(req)
 }
 
-fun RxAppCompatActivity.shareWxWebpage(
+fun AppCompatActivity.shareWxWebpage(
     webpageUrl: String,
     title: String = "",
     description: String = "",

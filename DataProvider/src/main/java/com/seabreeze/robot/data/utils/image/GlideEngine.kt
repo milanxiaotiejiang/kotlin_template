@@ -9,6 +9,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -19,11 +20,9 @@ import com.bumptech.glide.request.target.ImageViewTarget
 import com.luck.picture.lib.widget.longimage.ImageSource
 import com.luck.picture.lib.widget.longimage.ImageViewState
 import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView
-import com.seabreeze.robot.base.ext.execute
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ext.foundation.DispatcherExecutor
 import com.seabreeze.robot.data.GlideApp
 import com.seabreeze.robot.data.R
-import io.reactivex.Single
 import java.io.File
 import java.math.BigDecimal
 
@@ -374,13 +373,11 @@ class GlideEngine private constructor() : ImageEngine, com.luck.picture.lib.engi
     /**
      * 清除图片磁盘缓存
      */
-    override fun clearImageDiskCache(activity: RxAppCompatActivity) {
+    override fun clearImageDiskCache(activity: AppCompatActivity) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Single.create<Any> {
+            DispatcherExecutor.iOExecutor.submit {
                 GlideApp.get(activity).clearDiskCache()
             }
-                .execute(activity)
-                .subscribe()
         } else {
             GlideApp.get(activity).clearDiskCache()
         }
@@ -389,19 +386,17 @@ class GlideEngine private constructor() : ImageEngine, com.luck.picture.lib.engi
     /**
      * 清除图片内存缓存
      */
-    override fun clearImageMemoryCache(activity: RxAppCompatActivity) {
+    override fun clearImageMemoryCache(activity: AppCompatActivity) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Single.create<Any> {
+            DispatcherExecutor.iOExecutor.submit {
                 GlideApp.get(activity).clearMemory()
             }
-                .execute(activity)
-                .subscribe()
         } else {
             GlideApp.get(activity).clearMemory()
         }
     }
 
-    override fun clearImageAllCache(activity: RxAppCompatActivity) {//暂时这样，不完美
+    override fun clearImageAllCache(activity: AppCompatActivity) {//暂时这样，不完美
         clearImageDiskCache(activity)
         clearImageMemoryCache(activity)
         deleteFolderFile(

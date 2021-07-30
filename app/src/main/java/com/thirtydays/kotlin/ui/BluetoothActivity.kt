@@ -5,8 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import com.seabreeze.robot.base.presenter.BasePresenter
-import com.seabreeze.robot.base.presenter.view.BaseView
+import androidx.viewbinding.ViewBinding
+import com.seabreeze.robot.base.framework.mvp.BasePresenter
+import com.seabreeze.robot.base.framework.mvp.view.BaseView
 import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
 import com.thirtydays.kotlin.receiver.BluetoothStateReceiver
 import com.thirtydays.kotlin.utils.BluetoothUtils
@@ -18,8 +19,8 @@ import com.thirtydays.kotlin.utils.BluetoothUtils
  * desc   :
  * </pre>
  */
-abstract class BluetoothActivity<out Presenter : BasePresenter<BaseView<Presenter>>> :
-    BaseMvpActivity<Presenter>(), BaseView<Presenter>,
+abstract class BluetoothActivity<out Presenter : BasePresenter<BaseView<Presenter>>, VB : ViewBinding> :
+    BaseMvpActivity<Presenter, VB>(), BaseView<Presenter>,
     BluetoothStateReceiver.BroadcastReceiverListener {
 
     var mBtAdapter: BluetoothAdapter? = null

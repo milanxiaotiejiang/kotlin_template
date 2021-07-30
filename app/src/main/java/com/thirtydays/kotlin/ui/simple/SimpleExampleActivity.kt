@@ -1,17 +1,18 @@
 package com.thirtydays.kotlin.ui.simple
 
 import android.os.Looper
+import android.widget.TextView
 import com.elvishew.xlog.XLog
-import com.seabreeze.robot.base.ext.encryption
-import com.seabreeze.robot.base.ext.gToJson
+import com.seabreeze.robot.base.ext.find
 import com.seabreeze.robot.base.ext.launchRequest
+import com.seabreeze.robot.base.ext.tool.encryption
+import com.seabreeze.robot.base.ext.tool.gToJson
 import com.seabreeze.robot.base.model.BaseResult
 import com.seabreeze.robot.base.ui.activity.SimpleActivity
 import com.seabreeze.robot.data.net.DataRepository.Companion.sSimpleImplement
 import com.seabreeze.robot.data.net.bean.request.EmailLoginDTO
 import com.seabreeze.robot.data.net.bean.response.AccountPO
 import com.thirtydays.kotlin.R
-import kotlinx.android.synthetic.main.activity_simple_example.*
 import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
@@ -24,10 +25,13 @@ import okhttp3.RequestBody.Companion.toRequestBody
  * </pre>
  */
 class SimpleExampleActivity : SimpleActivity() {
+
+    private lateinit var tvContent: TextView
+
     override fun getLayoutId() = R.layout.activity_simple_example
 
     override fun initData() {
-        tvSimple.setOnClickListener {
+        find<TextView>(R.id.tvSimple).setOnClickListener {
             clickSimple()
         }
     }

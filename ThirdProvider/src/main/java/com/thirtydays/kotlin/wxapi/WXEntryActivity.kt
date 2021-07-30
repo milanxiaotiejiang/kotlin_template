@@ -3,9 +3,9 @@ package com.thirtydays.kotlin.wxapi
 import android.content.Intent
 import android.os.Bundle
 import com.elvishew.xlog.XLog
-import com.seabreeze.robot.base.ext.postEvent
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ext.tool.postEvent
+import com.seabreeze.robot.base.ext.tool.toast
+import com.seabreeze.robot.base.ui.foundation.activity.BaseActivity
 import com.seabreeze.robot.third.ext.WxPay.createWx
 import com.seabreeze.robot.third.ext.loginWxRequest
 import com.seabreeze.robot.third.model.WxLoginEvent
@@ -16,7 +16,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 
-class WXEntryActivity : RxAppCompatActivity(), IWXAPIEventHandler {
+class WXEntryActivity : BaseActivity(), IWXAPIEventHandler {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createWx()?.handleIntent(intent, this)

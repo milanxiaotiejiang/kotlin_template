@@ -1,8 +1,8 @@
 package com.seabreeze.robot.third.ext
 
-import com.seabreeze.robot.base.ext.gToBean
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.seabreeze.robot.base.ext.tool.gToBean
+import com.seabreeze.robot.base.ext.tool.toast
 import com.seabreeze.robot.third.ext.QQLogin.createQQ
 import com.tencent.connect.UserInfo
 import com.tencent.tauth.IUiListener
@@ -20,7 +20,7 @@ private const val APP_AUTHORITIES = ".fileprovider";
 
 object QQLogin {
     private var qqAPI: Tencent? = null
-    fun RxAppCompatActivity.createQQ(): Tencent {
+    fun AppCompatActivity.createQQ(): Tencent {
         if (qqAPI != null) {
             return qqAPI!!
         }
@@ -32,11 +32,11 @@ object QQLogin {
     }
 }
 
-fun RxAppCompatActivity.loginQQ(listener: IUiListener) {
+fun AppCompatActivity.loginQQ(listener: IUiListener) {
     createQQ().login(this, "all", listener)
 }
 
-fun RxAppCompatActivity.loginQQInfo(
+fun AppCompatActivity.loginQQInfo(
     thirdQQ: ThirdQQ,
     complete: (thirdQQ: ThirdQQ) -> Unit,
     error: (error: UiError) -> Unit,

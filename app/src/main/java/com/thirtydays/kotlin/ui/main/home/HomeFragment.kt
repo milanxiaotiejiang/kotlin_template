@@ -1,14 +1,13 @@
 package com.thirtydays.kotlin.ui.main.home
 
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.seabreeze.robot.base.router.pop
-import com.seabreeze.robot.base.ui.fragment.BaseMvvmFragment
+import com.seabreeze.robot.base.ext.foundation.pop
+import com.seabreeze.robot.base.ui.fragment.BaseVmFragment
 import com.seabreeze.robot.data.DataApplication.Companion.okHttpClient
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.HomeAdapter
-import com.thirtydays.kotlin.mvvm.repository.HomeRepository
+import com.thirtydays.kotlin.databinding.FragmentHomeBinding
 import com.thirtydays.kotlin.mvvm.vm.HomeViewModel
 import com.thirtydays.kotlin.ui.ext.ExtActivity
 import com.thirtydays.kotlin.ui.glide.GlideActivity
@@ -17,15 +16,18 @@ import com.thirtydays.kotlin.ui.hook.RoomActivity
 import com.thirtydays.kotlin.ui.loadpage.CommodityActivity
 import com.thirtydays.kotlin.ui.message.MessageListActivity
 import com.thirtydays.kotlin.ui.simple.SimpleExampleActivity
-import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.Request
 import java.io.IOException
 
-class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
+class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout.fragment_home) {
 
-    override fun createViewModel() = ViewModelProvider(this)[HomeViewModel::class.java]
 
-    override fun getLayoutId() = R.layout.fragment_home
+    override fun onInitDataBinding() {
+        mDataBinding.viewModel = mViewModel
+        mViewModel.accountData.observe(this) {
+            pop<MessageListActivity>()
+        }
+    }
 
     override fun requestData() {
 
@@ -40,8 +42,8 @@ class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
                 "极简单的页面请求"
             )
         )
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(
+        mDataBinding.recyclerView.adapter = adapter
+        mDataBinding.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 DividerItemDecoration.VERTICAL
@@ -73,9 +75,7 @@ class HomeFragment : BaseMvvmFragment<HomeRepository, HomeViewModel>() {
             }
         }
 
-        mViewModel.accountData.observe(this) {
-            pop<MessageListActivity>()
-        }
+
     }
 
 }

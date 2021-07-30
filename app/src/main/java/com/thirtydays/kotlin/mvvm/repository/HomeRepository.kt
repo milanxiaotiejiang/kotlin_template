@@ -1,6 +1,6 @@
 package com.thirtydays.kotlin.mvvm.repository
 
-import com.seabreeze.robot.base.vm.BaseRepository
+import com.seabreeze.robot.base.framework.mvvm.BaseRepository
 import com.seabreeze.robot.data.DataApplication.Companion.dataRepository
 import com.seabreeze.robot.base.model.BaseResult
 import com.seabreeze.robot.data.net.bean.response.AccountPO

@@ -1,14 +1,16 @@
 package com.seabreeze.robot.third.ext
 
 import android.annotation.SuppressLint
-import com.seabreeze.robot.base.ext.execute
-import com.seabreeze.robot.base.ext.gToBean
-import com.seabreeze.robot.base.model.Either
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.foundation.Either
+import com.seabreeze.robot.base.ext.tool.gToBean
 import com.seabreeze.robot.data.DataApplication.Companion.okHttpClient
 import com.seabreeze.robot.third.ext.WxPay.createWx
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.Request
 
 
@@ -18,7 +20,7 @@ import okhttp3.Request
  * Des:
  */
 private const val SCOPE = "snsapi_userinfo,snsapi_friend,snsapi_message,snsapi_contact"
-fun RxAppCompatActivity.loginWx() {
+fun AppCompatActivity.loginWx() {
     val req = SendAuth.Req()
     req.scope = SCOPE
     req.state = "none"
@@ -26,9 +28,9 @@ fun RxAppCompatActivity.loginWx() {
 }
 
 @SuppressLint("CheckResult")
-fun RxAppCompatActivity.loginWxRequest(
+fun AppCompatActivity.loginWxRequest(
     code: String,
-    result: (Either<WxResult, Throwable>) -> Unit
+    result: (Either<WxResult, BaseThrowable>) -> Unit
 ) {
     Flowable.just(code)
         .map {
@@ -78,16 +80,17 @@ fun RxAppCompatActivity.loginWxRequest(
                 }
                 Either.left(wxResult)
             }, {
-                Either.right(it)
+                Either.right(BaseThrowable.ExternalThrowable(it))
             })
         }
-        .execute(this)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
             it?.apply {
                 result(this)
             }
         }, {
-            result(Either.right(it))
+            result(Either.right(BaseThrowable.ExternalThrowable(it)))
         })
 
 }

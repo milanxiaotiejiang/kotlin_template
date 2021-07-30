@@ -3,11 +3,12 @@ package com.seabreeze.robot.third.ui
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.seabreeze.robot.base.ext.registerEvent
-import com.seabreeze.robot.base.ext.unregisterEvent
+import com.seabreeze.robot.base.ext.tool.registerEvent
+import com.seabreeze.robot.base.ext.tool.unregisterEvent
 import com.seabreeze.robot.base.router.RouterPath
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ui.foundation.activity.RxAppCompatActivity
 import com.seabreeze.robot.third.R
+import com.seabreeze.robot.third.databinding.ActivityPayBinding
 import com.seabreeze.robot.third.ext.ALI_PAY_SUCCESSFUL
 import com.seabreeze.robot.third.ext.payAli
 import com.seabreeze.robot.third.ext.payWx
@@ -24,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Des:
  */
 @Route(path = RouterPath.UserCenter.PATH_APP_PAY)
-class PayActivity : RxAppCompatActivity() {
+class PayActivity : RxAppCompatActivity<ActivityPayBinding>() {
 
     private var payAliDisposable: Disposable? = null
 
@@ -70,11 +71,10 @@ class PayActivity : RxAppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onResultEvent(event: WxPayEvent) {
-        if (event.ok)
-            when (event.bean.errCode) {
-                BaseResp.ErrCode.ERR_OK -> paySuccess()
-                else -> {
-                }
+        when (event.bean?.errCode) {
+            BaseResp.ErrCode.ERR_OK -> paySuccess()
+            else -> {
             }
+        }
     }
 }

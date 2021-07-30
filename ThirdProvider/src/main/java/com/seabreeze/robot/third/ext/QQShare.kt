@@ -2,13 +2,13 @@ package com.seabreeze.robot.third.ext
 
 import android.app.Activity
 import android.os.Bundle
-import com.seabreeze.robot.base.ext.getResString
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.seabreeze.robot.base.ext.tool.getResString
 import com.seabreeze.robot.third.R
+import com.seabreeze.robot.third.ext.QQLogin.createQQ
 import com.tencent.connect.share.QQShare
 import com.tencent.tauth.IUiListener
 import com.tencent.tauth.UiError
-import com.seabreeze.robot.third.ext.QQLogin.createQQ
 
 /**
  * User: milan
@@ -26,7 +26,7 @@ SHARE_TO_QQ_TYPE_APP = 6;
 SHARE_TO_QQ_MINI_PROGRAM = 7;
  */
 
-fun RxAppCompatActivity.shareQQMusic(
+fun AppCompatActivity.shareQQMusic(
     activity: Activity,
     title: String,
     targetUrl: String = "",
@@ -57,7 +57,7 @@ fun RxAppCompatActivity.shareQQMusic(
     })
 }
 
-fun RxAppCompatActivity.shareQQImage(imageUrl: String, listener: IUiListener) {
+fun AppCompatActivity.shareQQImage(imageUrl: String, listener: IUiListener) {
     val params = Bundle()
         .apply {
             putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, imageUrl)
@@ -69,7 +69,7 @@ fun RxAppCompatActivity.shareQQImage(imageUrl: String, listener: IUiListener) {
     createQQ().shareToQQ(this, params, listener)
 }
 
-fun RxAppCompatActivity.shareQQDefault(
+fun AppCompatActivity.shareQQDefault(
     activity: Activity,
     title: String,
     targetUrl: String = "",

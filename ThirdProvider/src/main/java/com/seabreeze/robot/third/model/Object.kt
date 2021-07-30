@@ -2,7 +2,7 @@ package com.seabreeze.robot.third.model
 
 import android.os.Parcelable
 import com.seabreeze.robot.third.ext.Wxbody
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * User: milan

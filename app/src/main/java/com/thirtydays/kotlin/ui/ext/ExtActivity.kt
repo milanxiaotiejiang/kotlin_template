@@ -2,23 +2,20 @@ package com.thirtydays.kotlin.ui.ext
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.seabreeze.robot.base.presenter.BasePresenter
-import com.seabreeze.robot.base.router.pop
+import com.seabreeze.robot.base.ext.foundation.pop
+import com.seabreeze.robot.base.framework.mvp.BasePresenter
 import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
-import com.thirtydays.kotlin.R
+import com.thirtydays.kotlin.databinding.ActivityExtBinding
 import com.thirtydays.kotlin.ui.ext.activity.TimeActivity
 import com.thirtydays.kotlin.ui.ext.activity.ViewActivity
-import kotlinx.android.synthetic.main.activity_ext.*
 
 class ExtPresenter : BasePresenter<ExtActivity>()
-class ExtActivity : BaseMvpActivity<ExtPresenter>() {
-
-    override fun getLayoutId() = R.layout.activity_ext
+class ExtActivity : BaseMvpActivity<ExtPresenter, ActivityExtBinding>() {
 
     override fun initData() {
-        setSupportActionBar(toolbar)
-        toolbar_layout.title = title
-        fab.setOnClickListener { view ->
+        setSupportActionBar(mViewBinding.toolbar)
+        mViewBinding.toolbarLayout.title = title
+        mViewBinding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }

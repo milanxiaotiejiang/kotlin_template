@@ -3,19 +3,19 @@ package com.seabreeze.robot.third.ui
 import android.content.Context
 import android.content.Intent
 import android.view.inputmethod.InputMethodManager
-import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.gyf.immersionbar.ImmersionBar
-import com.jakewharton.rxbinding3.view.clicks
-import com.seabreeze.robot.base.ext.gToBean
-import com.seabreeze.robot.base.ext.registerEvent
-import com.seabreeze.robot.base.ext.unregisterEvent
+import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.tool.gToBean
+import com.seabreeze.robot.base.ext.tool.registerEvent
+import com.seabreeze.robot.base.ext.tool.unregisterEvent
+import com.seabreeze.robot.base.ext.view.setOnIntervalClickListener
+import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.router.RouterPath
-import com.seabreeze.robot.base.ui.activity.BaseMvvmActivity
-import com.seabreeze.robot.base.vm.BaseRepository
-import com.seabreeze.robot.base.vm.BaseViewModel
+import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.seabreeze.robot.data.common.Common
 import com.seabreeze.robot.third.R
+import com.seabreeze.robot.third.databinding.ActivityLoginBinding
 import com.seabreeze.robot.third.ext.ThirdQQ
 import com.seabreeze.robot.third.ext.loginQQ
 import com.seabreeze.robot.third.ext.loginQQInfo
@@ -28,8 +28,8 @@ import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_login.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
@@ -45,14 +45,11 @@ import java.util.concurrent.TimeUnit
  * </pre>
  */
 
-class LoginViewModel : BaseViewModel<LoginRepository>() {
-    override fun createRepository() = LoginRepository()
-}
-
-class LoginRepository : BaseRepository()
+class LoginViewModel : BaseViewModel()
 
 @Route(path = RouterPath.UserCenter.PATH_APP_LOGIN)
-class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
+class LoginActivity :
+    BaseVmActivity<LoginViewModel, ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var inputMethodManager: InputMethodManager
 
@@ -68,7 +65,7 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
         }
 
         override fun onError(error: UiError?) {
-            onError(throwable = Throwable(error?.errorMessage))
+            onError(throwable = BaseThrowable.ExternalThrowable(Throwable(error?.errorMessage)))
         }
 
         override fun onCancel() {
@@ -91,7 +88,7 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
             }
 
         }, { uiError ->
-            onError(throwable = Throwable(uiError.errorMessage))
+            onError(throwable = BaseThrowable.ExternalThrowable(Throwable(uiError.errorMessage)))
         })
     }
 
@@ -105,11 +102,8 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
             .init()
     }
 
-    override fun createViewModel() = ViewModelProvider(this)[LoginViewModel::class.java]
-
-    override fun getLayoutId() = R.layout.activity_login
-
-    override fun initViewModel() {
+    override fun onInitDataBinding() {
+        mDataBinding.viewModel = mViewModel
         mViewModel.run {
 
         }
@@ -119,30 +113,22 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
         inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         val tip = "我已经阅读并同意使用条款和隐私政策"
-        autoLinkStyleTextView.text = tip
-        autoLinkStyleTextView.setDefaultTextValue("使用条款和隐私政策")
-        autoLinkStyleTextView.addClickCallBack {
+        mDataBinding.autoLinkStyleTextView.text = tip
+        mDataBinding.autoLinkStyleTextView.setDefaultTextValue("使用条款和隐私政策")
+        mDataBinding.autoLinkStyleTextView.addClickCallBack {
         }
 
-        addDisposable(loginQQBtn.clicks()
-            .throttleFirst(2, TimeUnit.SECONDS)
-            .subscribe {
-                loginQQ(iuiListener)
-            }
-        )
+        mDataBinding.loginQQBtn.setOnIntervalClickListener {
+            loginQQ(iuiListener)
+        }
 
-        addDisposable(loginWechatBtn.clicks()
-            .throttleFirst(2, TimeUnit.SECONDS)
-            .subscribe {
-                loginWx()
-            }
-        )
+        mDataBinding.loginWechatBtn.setOnIntervalClickListener {
+            loginWx()
+        }
 
-        addDisposable(tvCode.clicks()
-            .throttleFirst(2, TimeUnit.SECONDS)
-            .subscribe {
-                countDown()
-            })
+        mDataBinding.tvCode.setOnIntervalClickListener {
+            countDown()
+        }
 
         registerEvent()
     }
@@ -150,6 +136,7 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
 
     override fun onDestroy() {
         unregisterEvent()
+        clearDisposable()
         super.onDestroy()
     }
 
@@ -162,20 +149,19 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onResultEvent(event: WxLoginEvent) {
-        if (event.ok)
-            event.bean.fold({ wxResult ->
-                wxResult.wxInfo?.let { wxInfo ->
-                    val thirdInfo = ThirdInfo(
-                        wxResult.openid,
-                        Common.THREE_TYPE_WX,
-                        wxInfo.nickname,
-                        wxInfo.headimgurl
-                    )
-                    // TODO: 2020/9/29  
-                }
-            }, {
-                onError(it)
-            })
+        event.bean?.fold({ wxResult ->
+            wxResult.wxInfo?.let { wxInfo ->
+                val thirdInfo = ThirdInfo(
+                    wxResult.openid,
+                    Common.THREE_TYPE_WX,
+                    wxInfo.nickname,
+                    wxInfo.headimgurl
+                )
+                // TODO: 2020/9/29
+            }
+        }, {
+            onError(it)
+        })
     }
 
     private val codeTimes: Long = 59
@@ -186,7 +172,7 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
             .map { aLong: Long -> codeTimes - aLong }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                tvCode.isEnabled = false
+                mDataBinding.tvCode.isEnabled = false
             }
             .subscribe(object : io.reactivex.Observer<Long> {
                 override fun onSubscribe(d: Disposable) {
@@ -194,13 +180,13 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
                 }
 
                 override fun onNext(aLong: Long) {
-                    tvCode.text = "$aLong s后重新获取"
+                    mDataBinding.tvCode.text = "$aLong s后重新获取"
                 }
 
                 override fun onError(e: Throwable) {}
                 override fun onComplete() {
-                    tvCode.isEnabled = true
-                    tvCode.text = "重新获取"
+                    mDataBinding.tvCode.isEnabled = true
+                    mDataBinding.tvCode.text = "重新获取"
                 }
             })
     }
@@ -211,5 +197,21 @@ class LoginActivity : BaseMvvmActivity<LoginRepository, LoginViewModel>() {
                 inputMethodManager.hideSoftInputFromWindow(this, 0)
             }
         }
+    }
+
+    private lateinit var mCompositeDisposable: CompositeDisposable
+
+    /**
+     * 添加订阅
+     */
+    fun addDisposable(disposable: Disposable) {
+        mCompositeDisposable.add(disposable)
+    }
+
+    /**
+     * 取消所有订阅
+     */
+    fun clearDisposable() {
+        mCompositeDisposable.clear()
     }
 }

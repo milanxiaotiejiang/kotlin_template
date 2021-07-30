@@ -1,4 +1,4 @@
-package com.thirtydays.myapplication.ui.slideshow
+package com.thirtydays.kotlin.ui.main.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

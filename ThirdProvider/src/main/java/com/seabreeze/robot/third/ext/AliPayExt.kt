@@ -2,9 +2,9 @@ package com.seabreeze.robot.third.ext
 
 import android.annotation.SuppressLint
 import android.text.TextUtils
+import androidx.appcompat.app.AppCompatActivity
 import com.alipay.sdk.app.PayTask
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ext.tool.toast
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,7 +34,7 @@ data class PayResult(
 )
 
 @SuppressLint("CheckResult")
-fun RxAppCompatActivity.payAli(
+fun AppCompatActivity.payAli(
     orderInfo: String,
     result: (result: PayResult) -> Unit
 ) =

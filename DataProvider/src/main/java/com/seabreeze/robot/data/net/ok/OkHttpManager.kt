@@ -7,14 +7,10 @@ import com.elvishew.xlog.XLog
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.seabreeze.library.okhttp.OkHttpHooker
 import com.seabreeze.robot.data.DataSettings
 import com.seabreeze.robot.data.common.Common.Companion.H_NAME
 import com.seabreeze.robot.data.common.Common.Companion.ROBOT_MALL
 import com.seabreeze.robot.data.net.RetrofitFactory.Companion.API_ROBOT_MALL
-import com.seabreeze.robot.data.net.asm.CustomGlobalDns
-import com.seabreeze.robot.data.net.asm.CustomGlobalEventListener
-import com.seabreeze.robot.data.net.asm.CustomGlobalInterceptor
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.logging.HttpLoggingInterceptor
@@ -113,9 +109,9 @@ class OkHttpManager private constructor() {
             SharedPrefsCookiePersistor(context)
         )
 
-        OkHttpHooker.installEventListenerFactory(CustomGlobalEventListener.FACTORY)
-        OkHttpHooker.installDns(CustomGlobalDns())
-        OkHttpHooker.installInterceptor(CustomGlobalInterceptor())
+//        OkHttpHooker.installEventListenerFactory(CustomGlobalEventListener.FACTORY)
+//        OkHttpHooker.installDns(CustomGlobalDns())
+//        OkHttpHooker.installInterceptor(CustomGlobalInterceptor())
 
         // 配置 client
         return OkHttpClient.Builder()

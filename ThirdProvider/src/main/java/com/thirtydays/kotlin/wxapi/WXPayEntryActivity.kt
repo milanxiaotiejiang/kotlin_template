@@ -2,9 +2,9 @@ package com.thirtydays.kotlin.wxapi
 
 import android.content.Intent
 import android.os.Bundle
-import com.seabreeze.robot.base.ext.postEvent
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ext.tool.postEvent
+import com.seabreeze.robot.base.ext.tool.toast
+import com.seabreeze.robot.base.ui.foundation.activity.BaseActivity
 import com.seabreeze.robot.third.ext.WxPay.createWx
 import com.seabreeze.robot.third.model.WxPayEvent
 import com.tencent.mm.opensdk.constants.ConstantsAPI
@@ -21,7 +21,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
  * @description : TODO
  * </pre>
  */
-class WXPayEntryActivity : RxAppCompatActivity(), IWXAPIEventHandler {
+class WXPayEntryActivity : BaseActivity(), IWXAPIEventHandler {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createWx()?.handleIntent(intent, this)

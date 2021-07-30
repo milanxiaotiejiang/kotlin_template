@@ -4,8 +4,8 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.seabreeze.robot.base.ext.setGone
-import com.seabreeze.robot.base.ext.setVisible
+import com.seabreeze.robot.base.ext.view.setGone
+import com.seabreeze.robot.base.ext.view.setVisible
 import com.seabreeze.robot.data.utils.image.GlideEngine
 import com.thirtydays.kotlin.R
 

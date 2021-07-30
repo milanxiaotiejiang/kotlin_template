@@ -1,57 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.LoginActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Toolbar.MyStyle"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.seabreeze.robot.third.ui.LoginViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="登录"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@android:color/white">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.LoginActivity">
 
-    </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar.MyStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="登录"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextColor="@android:color/white">
+
+        </androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:text="使用条款示例" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:text="使用条款示例" />
 
-    <com.seabreeze.robot.base.widget.AutoLinkStyleTextView
-        android:id="@+id/autoLinkStyleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:textSize="13sp" />
+        <com.seabreeze.robot.base.widget.AutoLinkStyleTextView
+            android:id="@+id/autoLinkStyleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="13sp" />
 
-    <com.seabreeze.robot.base.widget.state.StateButton
-        android:id="@+id/tvCode"
-        style="@style/state_style"
-        android:layout_marginTop="40dp"
-        android:text="code" />
+        <com.seabreeze.robot.base.widget.state.StateButton
+            android:id="@+id/tvCode"
+            style="@style/state_style"
+            android:layout_marginTop="40dp"
+            android:text="code" />
 
-    <com.seabreeze.robot.base.widget.state.StateButton
-        android:id="@+id/loginQQBtn"
-        style="@style/state_style"
-        android:layout_marginTop="40dp"
-        android:text="QQ" />
+        <com.seabreeze.robot.base.widget.state.StateButton
+            android:id="@+id/loginQQBtn"
+            style="@style/state_style"
+            android:layout_marginTop="40dp"
+            android:text="QQ" />
 
-    <com.seabreeze.robot.base.widget.state.StateButton
-        android:id="@+id/loginWechatBtn"
-        style="@style/state_style"
-        android:layout_marginTop="40dp"
-        android:text="WX" />
+        <com.seabreeze.robot.base.widget.state.StateButton
+            android:id="@+id/loginWechatBtn"
+            style="@style/state_style"
+            android:layout_marginTop="40dp"
+            android:text="WX" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</layout>

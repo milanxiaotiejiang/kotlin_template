@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -20,15 +20,22 @@ android {
         multiDexEnabled true
         flavorDimensions "1"
 
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
+
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a"
-        }
+
+//        kapt {
+//            arguments {
+//                arg("AROUTER_MODULE_NAME", project.getName())
+//            }
+//        }
     }
 
     buildTypes {
@@ -43,14 +50,24 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    kapt.includeCompileClasspath = false
 }
 
 dependencies {

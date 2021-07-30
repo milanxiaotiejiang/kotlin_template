@@ -3,7 +3,7 @@ package com.thirtydays.kotlin.ui.ext.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.elvishew.xlog.XLog
-import com.seabreeze.robot.base.ext.*
+import com.seabreeze.robot.base.ext.tool.*
 import com.thirtydays.kotlin.R
 import java.util.*
 

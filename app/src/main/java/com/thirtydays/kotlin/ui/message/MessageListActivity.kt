@@ -2,15 +2,15 @@ package com.thirtydays.kotlin.ui.message
 
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.jakewharton.rxbinding3.view.clicks
-import com.seabreeze.robot.base.model.Either
+import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.foundation.Either
 import com.seabreeze.robot.base.router.startMessage
 import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
 import com.seabreeze.robot.data.net.bean.response.Message
-import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.MessageAdapter
+import com.thirtydays.kotlin.databinding.ActivityMessageListBinding
 import com.thirtydays.kotlin.mvp.MessageListPresenter
 import com.thirtydays.kotlin.mvp.MessageListView
-import kotlinx.android.synthetic.main.activity_message_list.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -20,21 +20,20 @@ import java.util.concurrent.TimeUnit
  * desc   :
  * </pre>
  */
-class MessageListActivity : BaseMvpActivity<MessageListPresenter>(), MessageListView {
+class MessageListActivity : BaseMvpActivity<MessageListPresenter, ActivityMessageListBinding>(),
+    MessageListView {
 
     private lateinit var mAdapter: MessageAdapter
 
-    override fun getLayoutId() = R.layout.activity_message_list
-
     override fun initData() {
 
-        addDisposable(commonTitleBar.leftImageButton.clicks()
+        addDisposable(mViewBinding.commonTitleBar.leftImageButton.clicks()
             .throttleFirst(2, TimeUnit.SECONDS)
             .subscribe {
                 finish()
             })
 
-        recyclerView.addItemDecoration(
+        mViewBinding.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 this,
                 DividerItemDecoration.VERTICAL
@@ -42,7 +41,7 @@ class MessageListActivity : BaseMvpActivity<MessageListPresenter>(), MessageList
         )
 
         mAdapter = MessageAdapter()
-        recyclerView.adapter = mAdapter
+        mViewBinding.recyclerView.adapter = mAdapter
 
         mAdapter.setOnItemClickListener { _, _, position ->
             val message = mAdapter.data[position]
@@ -52,7 +51,7 @@ class MessageListActivity : BaseMvpActivity<MessageListPresenter>(), MessageList
         mPresenter.message()
     }
 
-    override fun onMessage(either: Either<List<Message>, Throwable>) {
+    override fun onMessage(either: Either<List<Message>, BaseThrowable>) {
         either.fold({
             mAdapter.setList(it)
         }, {

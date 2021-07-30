@@ -4,13 +4,18 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.elvishew.xlog.XLog
 import com.jakewharton.rxbinding3.view.clicks
 import com.seabreeze.robot.base.ext.*
+import com.seabreeze.robot.base.ext.tool.*
 import com.seabreeze.robot.base.router.RouterPath
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ui.foundation.activity.RxAppCompatActivity
+import com.seabreeze.robot.base.widget.round.RoundTextView
 import com.seabreeze.robot.third.R
+import com.seabreeze.robot.third.databinding.ActivityShareBinding
 import com.seabreeze.robot.third.ext.createQRCodeBitmap
 import com.seabreeze.robot.third.ext.shareQQImage
 import com.seabreeze.robot.third.ext.shareWxImg
@@ -21,8 +26,6 @@ import com.tencent.tauth.IUiListener
 import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import io.reactivex.Flowable
-import kotlinx.android.synthetic.main.activity_share.*
-import kotlinx.android.synthetic.main.layout_share_pic_model.*
 import java.io.BufferedOutputStream
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -38,7 +41,7 @@ import kotlin.math.min
  * </pre>
  */
 @Route(path = RouterPath.UserCenter.PATH_APP_SHARE)
-class ShareActivity : RxAppCompatActivity() {
+class ShareActivity : RxAppCompatActivity<ActivityShareBinding>() {
 
     private val iuiListener = object : IUiListener {
         override fun onComplete(response: Any?) {
@@ -61,7 +64,9 @@ class ShareActivity : RxAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
 
-        addDisposable(save.clicks()
+        val posterLayout = find<LinearLayout>(R.id.save)
+
+        find<RoundTextView>(R.id.save).clicks()
             .throttleFirst(2, TimeUnit.SECONDS)
             .subscribe {
                 Flowable.just(posterLayout)
@@ -111,24 +116,29 @@ class ShareActivity : RxAppCompatActivity() {
                         mPosterPath = it
                     }
             }
+
+        addDisposable(
+            mViewBinding.share.clicks()
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe {
+                    mPosterPath?.let {
+                        showSharePopWindow({
+                            shareWxImg(it)
+                        }, {
+                            shareWxImg(it, scene = SendMessageToWX.Req.WXSceneTimeline)
+                        }, {
+                            shareQQImage(it, iuiListener)
+                        })
+                    } ?: toast { "请先保存海报" }
+                }
         )
 
-        addDisposable(share.clicks()
-            .throttleFirst(2, TimeUnit.SECONDS)
-            .subscribe {
-                mPosterPath?.let {
-                    showSharePopWindow({
-                        shareWxImg(it)
-                    }, {
-                        shareWxImg(it, scene = SendMessageToWX.Req.WXSceneTimeline)
-                    }, {
-                        shareQQImage(it, iuiListener)
-                    })
-                } ?: toast { "请先保存海报" }
-            }
+        find<ImageView>(R.id.qRCode).setImageBitmap(
+            "765151629@qq.com".createQRCodeBitmap(
+                dp2px(100),
+                dp2px(100)
+            )
         )
-
-        qRCode.setImageBitmap("765151629@qq.com".createQRCodeBitmap(dp2px(100), dp2px(100)))
 
     }
 

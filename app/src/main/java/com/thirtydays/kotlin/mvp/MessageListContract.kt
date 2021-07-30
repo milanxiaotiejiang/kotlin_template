@@ -1,10 +1,11 @@
 package com.thirtydays.kotlin.mvp
 
-import com.seabreeze.robot.base.ext.dcEither
 import com.seabreeze.robot.base.ext.execute
-import com.seabreeze.robot.base.model.Either
-import com.seabreeze.robot.base.presenter.BasePresenter
-import com.seabreeze.robot.base.presenter.view.BaseView
+import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.foundation.Either
+import com.seabreeze.robot.base.ext.foundation.dcEither
+import com.seabreeze.robot.base.framework.mvp.BasePresenter
+import com.seabreeze.robot.base.framework.mvp.view.BaseView
 import com.seabreeze.robot.data.DataApplication.Companion.dataRepository
 import com.seabreeze.robot.data.net.bean.response.Message
 import io.reactivex.disposables.Disposable
@@ -19,7 +20,7 @@ import io.reactivex.disposables.Disposable
  * </pre>
  */
 interface MessageListView : BaseView<MessageListPresenter> {
-    fun onMessage(either: Either<List<Message>, Throwable>)
+    fun onMessage(either: Either<List<Message>, BaseThrowable>)
 }
 
 class MessageListPresenter : BasePresenter<MessageListView>() {
@@ -29,6 +30,6 @@ class MessageListPresenter : BasePresenter<MessageListView>() {
         .subscribe({
             mView.onMessage(it.dcEither())
         }, {
-            mView.onError(it)
+            mView.onError(BaseThrowable.ExternalThrowable(it))
         })
 }

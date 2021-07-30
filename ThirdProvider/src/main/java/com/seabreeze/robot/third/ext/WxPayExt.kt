@@ -1,11 +1,11 @@
 package com.seabreeze.robot.third.ext
 
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.seabreeze.robot.base.ext.tool.toast
+import com.seabreeze.robot.third.ext.WxPay.createWx
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
-import com.seabreeze.robot.third.ext.WxPay.createWx
 
 /**
  * <pre>
@@ -21,7 +21,7 @@ const val WX_APP_SECRET: String = "adc17afb1971b2de44cd42e915edfc51"
 
 object WxPay {
     private var wxAPI: IWXAPI? = null
-    fun RxAppCompatActivity.createWx(): IWXAPI? {
+    fun AppCompatActivity.createWx(): IWXAPI? {
         if (wxAPI != null) {
             return wxAPI!!
         }
@@ -36,7 +36,7 @@ object WxPay {
     }
 }
 
-fun RxAppCompatActivity.payWx(wxbody: Wxbody) {
+fun AppCompatActivity.payWx(wxbody: Wxbody) {
     val request = PayReq()
     request.appId = wxbody.appId
     request.partnerId = wxbody.partnerId

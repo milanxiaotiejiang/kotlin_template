@@ -4,8 +4,8 @@ import android.content.Context
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.ProgressBar
-import com.seabreeze.robot.base.ext.setGone
-import com.seabreeze.robot.base.ext.setVisible
+import com.seabreeze.robot.base.ext.view.setGone
+import com.seabreeze.robot.base.ext.view.setVisible
 
 /**
  * User: milan

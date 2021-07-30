@@ -1,11 +1,11 @@
 package com.thirtydays.kotlin.ui
 
 import com.seabreeze.robot.base.ext.execute
-import com.seabreeze.robot.base.presenter.BasePresenter
+import com.seabreeze.robot.base.framework.mvp.BasePresenter
 import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
 import com.seabreeze.robot.data.DataSettings.welcome
-import com.thirtydays.kotlin.R
+import com.thirtydays.kotlin.databinding.ActivitySplashBinding
 import io.reactivex.Flowable
 import java.util.concurrent.TimeUnit
 
@@ -18,8 +18,7 @@ import java.util.concurrent.TimeUnit
  * @description : 闪屏页面
  * </pre>
  */
-class SplashActivity : BaseMvpActivity<SplashPresenter>() {
-    override fun getLayoutId() = R.layout.activity_splash
+class SplashActivity : BaseMvpActivity<SplashPresenter, ActivitySplashBinding>() {
 
     override fun initData() {
 

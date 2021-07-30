@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.thirtydays.kotlin.R
-import com.thirtydays.myapplication.ui.slideshow.SlideshowViewModel
 
 class SlideshowFragment : Fragment() {
 

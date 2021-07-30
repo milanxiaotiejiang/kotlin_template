@@ -1,7 +1,8 @@
 package com.seabreeze.robot.third.model
 
+import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.foundation.Either
 import com.seabreeze.robot.base.model.BaseEvent
-import com.seabreeze.robot.base.model.Either
 import com.seabreeze.robot.third.ext.WxResult
 import com.tencent.mm.opensdk.modelbase.BaseResp
 
@@ -14,8 +15,8 @@ import com.tencent.mm.opensdk.modelbase.BaseResp
  * @description : TODO
  * </pre>
  */
-class WxLoginEvent(either: Either<WxResult, Throwable>) :
-    BaseEvent<Either<WxResult, Throwable>>(true, either)
+class WxLoginEvent(either: Either<WxResult, BaseThrowable>) :
+    BaseEvent<Either<WxResult, BaseThrowable>>(either)
 
-class WxPayEvent(resp: BaseResp) : BaseEvent<BaseResp>(true, resp)
-class WxShareEvent(resp: BaseResp) : BaseEvent<BaseResp>(true, resp)
+class WxPayEvent(resp: BaseResp) : BaseEvent<BaseResp>(resp)
+class WxShareEvent(resp: BaseResp) : BaseEvent<BaseResp>(resp)

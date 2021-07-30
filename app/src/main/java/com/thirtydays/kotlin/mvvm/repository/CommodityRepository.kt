@@ -1,11 +1,11 @@
 package com.thirtydays.kotlin.mvvm.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.seabreeze.robot.base.ext.coroutineRequest
-import com.seabreeze.robot.base.ext.dcEither
-import com.seabreeze.robot.base.model.Either
+import com.seabreeze.robot.base.ext.coroutine.coroutineRequest
+import com.seabreeze.robot.base.ext.foundation.Either
+import com.seabreeze.robot.base.ext.foundation.dcEither
+import com.seabreeze.robot.base.framework.mvvm.BaseRepository
 import com.seabreeze.robot.base.model.ListModel
-import com.seabreeze.robot.base.vm.BaseRepository
 import com.seabreeze.robot.base.widget.loadpage.LoadPageStatus
 import com.seabreeze.robot.data.DataApplication.Companion.dataRepository
 import com.seabreeze.robot.data.common.Common

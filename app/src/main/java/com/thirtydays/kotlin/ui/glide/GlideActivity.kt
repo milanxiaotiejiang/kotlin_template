@@ -4,21 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.elvishew.xlog.XLog
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.permissionx.guolindev.PermissionX
-import com.seabreeze.robot.base.ext.toast
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import com.seabreeze.robot.base.ext.find
+import com.seabreeze.robot.base.ext.tool.toast
+import com.seabreeze.robot.base.ui.foundation.activity.BaseActivity
 import com.seabreeze.robot.data.utils.image.GlideEngine
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.ChoseImage
 import com.thirtydays.kotlin.adapter.ChoseImageAdapter
 import com.thirtydays.kotlin.widget.showChoosePhotoPopWindow
-import kotlinx.android.synthetic.main.activity_glide.*
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
 import java.io.File
@@ -28,7 +30,7 @@ import java.io.File
  * Time: 2020/9/18 22:47
  * Des:
  */
-class GlideActivity : RxAppCompatActivity() {
+class GlideActivity : BaseActivity() {
 
     private val mAdapter = ChoseImageAdapter()
 
@@ -36,18 +38,19 @@ class GlideActivity : RxAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_glide)
 
-        tvLoad.setOnClickListener {
+        find<TextView>(R.id.tvLoad).setOnClickListener {
             showPopWindow()
         }
-        tvClear.setOnClickListener {
+        find<TextView>(R.id.tvClear).setOnClickListener {
             GlideEngine.INSTANCE.clearImageAllCache(this)
         }
-        tvSize.setOnClickListener {
+        find<TextView>(R.id.tvSize).setOnClickListener {
             toast { GlideEngine.INSTANCE.getCacheSize(this) }
         }
 
-        rvImage.layoutManager = GridLayoutManager(this, 3)
-        rvImage.adapter = mAdapter
+        val recyclerView = find<RecyclerView>(R.id.rvImage)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
+        recyclerView.adapter = mAdapter
         mAdapter.addChildClickViewIds(R.id.ivDelete, R.id.image)
         mAdapter.setOnItemChildClickListener { _, view, position ->
 

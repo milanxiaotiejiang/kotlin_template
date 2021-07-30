@@ -2,7 +2,7 @@ package com.seabreeze.robot.base.common
 
 import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.common.LanguageHelper.LANGUAGE_SYSTEM
-import com.seabreeze.robot.base.ext.Mmkv
+import com.seabreeze.robot.base.ext.foundation.Mmkv
 
 /**
  * <pre>

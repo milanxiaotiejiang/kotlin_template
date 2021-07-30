@@ -1,7 +1,7 @@
 package com.thirtydays.kotlin.mvvm.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.seabreeze.robot.base.vm.BaseViewModel
+import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.data.DataSettings.token_app
 import com.seabreeze.robot.data.net.bean.response.AccountPO
 import com.thirtydays.kotlin.mvvm.repository.HomeRepository
@@ -15,8 +15,9 @@ import com.thirtydays.kotlin.mvvm.repository.HomeRepository
  * @description : HomeViewModel
  * </pre>
  */
-class HomeViewModel : BaseViewModel<HomeRepository>() {
-    override fun createRepository() = HomeRepository()
+class HomeViewModel : BaseViewModel() {
+
+    private val mRepository: HomeRepository = HomeRepository()
 
     val accountData: MutableLiveData<AccountPO> by lazy {
         MutableLiveData<AccountPO>()

@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import com.seabreeze.robot.base.ui.rx.RxAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.seabreeze.robot.data.R
 
 /**
@@ -114,11 +114,11 @@ interface ImageEngine {
      */
     fun supportAnimatedGif(): Boolean
 
-    fun clearImageDiskCache(activity: RxAppCompatActivity)
+    fun clearImageDiskCache(activity: AppCompatActivity)
 
-    fun clearImageMemoryCache(activity: RxAppCompatActivity)
+    fun clearImageMemoryCache(activity: AppCompatActivity)
 
-    fun clearImageAllCache(activity: RxAppCompatActivity)
+    fun clearImageAllCache(activity: AppCompatActivity)
 
     fun getCacheSize(context: Context): String
 

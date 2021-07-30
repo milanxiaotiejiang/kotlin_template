@@ -9,7 +9,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 
 import com.elvishew.xlog.XLog;
-import com.seabreeze.robot.base.common.Platform;
+import com.seabreeze.robot.base.ext.foundation.Platform;
 
 import java.io.File;
 import java.io.FileInputStream;

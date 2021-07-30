@@ -1,23 +1,18 @@
 package com.thirtydays.kotlin.ui.loadpage
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.elvishew.xlog.XLog
-import com.jakewharton.rxbinding3.view.clicks
-import com.seabreeze.robot.base.ui.activity.BaseMvvmActivity
+import com.seabreeze.robot.base.ext.view.setOnIntervalClickListener
+import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.seabreeze.robot.base.widget.loadpage.LoadPageStatus
 import com.seabreeze.robot.base.widget.loadpage.LoadPageViewForStatus
 import com.seabreeze.robot.base.widget.loadpage.SimplePageViewForStatus
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.DeviceAdapter
-import com.thirtydays.kotlin.mvvm.repository.CommodityRepository
+import com.thirtydays.kotlin.databinding.ActivityCommodityBinding
 import com.thirtydays.kotlin.mvvm.vm.CommodityViewModel
-import kotlinx.android.synthetic.main.activity_commodity.*
-import kotlinx.android.synthetic.main.activity_message_list.commonTitleBar
-import kotlinx.android.synthetic.main.activity_message_list.recyclerView
-import java.util.concurrent.TimeUnit
 
 /**
  * <pre>
@@ -26,19 +21,17 @@ import java.util.concurrent.TimeUnit
  * desc   :
  * </pre>
  */
-class CommodityActivity : BaseMvvmActivity<CommodityRepository, CommodityViewModel>(),
+class CommodityActivity :
+    BaseVmActivity<CommodityViewModel, ActivityCommodityBinding>(R.layout.activity_commodity),
     OnLoadMoreListener {
-
-    override fun createViewModel() = ViewModelProvider(this)[CommodityViewModel::class.java]
 
     private val loadPageView = SimplePageViewForStatus()
     private var rootView: LoadPageViewForStatus? = null
 
     private var mAdapter = DeviceAdapter()
 
-    override fun getLayoutId() = R.layout.activity_commodity
-
-    override fun initViewModel() {
+    override fun onInitDataBinding() {
+        mDataBinding.viewModel = mViewModel
         mViewModel.run {
             loadPageLiveData.observe(
                 this@CommodityActivity, Observer<LoadPageStatus> { loadPageStatus ->
@@ -66,7 +59,7 @@ class CommodityActivity : BaseMvvmActivity<CommodityRepository, CommodityViewMod
                     showToast(errorMsg)
                 }
                 if (it.isRefresh)
-                    refreshLayout.finishRefresh(it.isFinishRefresh)
+                    mDataBinding.refreshLayout.finishRefresh(it.isFinishRefresh)
                 if (it.showEnd)
                     mAdapter.loadMoreModule.loadMoreEnd()
             })
@@ -75,11 +68,9 @@ class CommodityActivity : BaseMvvmActivity<CommodityRepository, CommodityViewMod
 
     override fun initData() {
 
-        addDisposable(commonTitleBar.leftImageButton.clicks()
-            .throttleFirst(2, TimeUnit.SECONDS)
-            .subscribe {
-                finish()
-            })
+        mDataBinding.commonTitleBar.leftImageButton.setOnIntervalClickListener {
+            finish()
+        }
 
         rootView = loadPageView.getRootView(this).apply {
             failView.setOnClickListener { refresh() }
@@ -87,7 +78,7 @@ class CommodityActivity : BaseMvvmActivity<CommodityRepository, CommodityViewMod
             emptyView.setOnClickListener { showToast("emptyView") }
         }
 
-        recyclerView.apply {
+        mDataBinding.recyclerView.apply {
             addItemDecoration(
                 DividerItemDecoration(
                     this@CommodityActivity,
@@ -104,8 +95,8 @@ class CommodityActivity : BaseMvvmActivity<CommodityRepository, CommodityViewMod
             }
         }
 
-        refreshLayout.setOnRefreshListener { refresh() }
-        refreshLayout.setEnableLoadMore(false)
+        mDataBinding.refreshLayout.setOnRefreshListener { refresh() }
+        mDataBinding.refreshLayout.setEnableLoadMore(false)
 
         refresh()
     }

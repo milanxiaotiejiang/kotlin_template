@@ -2,7 +2,7 @@ package com.thirtydays.kotlin.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.seabreeze.robot.base.ext.formatTimeYMD
+import com.seabreeze.robot.base.ext.tool.formatTimeYMD
 import com.seabreeze.robot.data.net.bean.response.Message
 import com.thirtydays.kotlin.R
 

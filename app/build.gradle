@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 Properties props = new Properties()
 props.load(new FileInputStream(file("keystore.properties")))
@@ -77,13 +77,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    android.applicationVariants.all { variant ->
+//        variant.getPackageApplicationProvider().get().outputDirectory = new File("/apk/${variant.buildType.name}")
+        variant.outputs.all { output ->
+            //开始输出 修改APP名称
+//            outputFileName = "template-${defaultConfig.versionName}-${variant.productFlavors[0].name}-${variant.buildType.name}.apk"
+            outputFileName = "Kotlin-${defaultConfig.versionName}-template.apk"
+        }
     }
 
 }

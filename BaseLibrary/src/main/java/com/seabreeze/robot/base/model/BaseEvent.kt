@@ -1,7 +1,5 @@
 package com.seabreeze.robot.base.model
 
-import retrofit2.HttpException
-
 /**
  * <pre>
  * author : 76515
@@ -9,15 +7,6 @@ import retrofit2.HttpException
  * desc   :
  * </pre>
  */
-open class BaseEvent<T>(var ok: Boolean, var bean: T) {
-    private var code: Int = 0
+open class BaseEvent<T>(var bean: T? = null)
 
-    constructor(code: Int, bean: T) : this(true, bean) {
-        this.code = code
-    }
-
-    fun code() = code
-}
-
-
-class TokenInvalidEvent(error: HttpException) : BaseEvent<HttpException>(true, error)
+class TokenInvalidEvent() : BaseEvent<Any>()

@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.ext.find
-import com.seabreeze.robot.base.ext.getItemView
+import com.seabreeze.robot.base.ext.tool.getItemView
 
 /**
  * <pre>

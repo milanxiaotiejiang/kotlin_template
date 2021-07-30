@@ -2,10 +2,8 @@ apply plugin: 'com.android.library'
 //apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
-//apply plugin: 'groovy'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -48,12 +46,21 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
 
 }
@@ -63,8 +70,7 @@ dependencies {
 
     api project(path: ':BaseLibrary')
 
-//    implementation project(path: ':ASM_okhttp_plugin')
-    implementation project(path: ':ASM_okhttp_library')
+//    implementation project(path: ':ASM_okhttp_library')
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
