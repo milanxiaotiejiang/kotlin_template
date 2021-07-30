@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class ViewBindingFragment<VB : ViewBinding> : BaseFragment() {
 
-    protected open lateinit var mViewBinding: ViewBinding
+    protected open lateinit var mViewBinding: VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
