@@ -4,6 +4,7 @@ import android.text.Editable
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.seabreeze.robot.base.ext.coroutine.ExceptionHandler
 import com.seabreeze.robot.base.ext.coroutine.launchFlow
 import com.seabreeze.robot.base.ext.coroutine.launchUI
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
@@ -14,11 +15,7 @@ import com.thirtydays.kotlin.ktx.DataSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onStart
-import me.yokeyword.fragmentation.helper.ExceptionHandler
+import kotlinx.coroutines.flow.*
 
 /**
  * <pre>
@@ -36,52 +33,44 @@ class LoginViewModel : BaseViewModel() {
     private val _isLoginEnable = MutableLiveData<Boolean>()
     val isLoginEnable: LiveData<Boolean> = _isLoginEnable
 
-    val isLoginSuccess = MutableLiveData<Boolean>()
-
     fun checkLoginEnable() {
         _isLoginEnable.value = !username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
     }
 
+    val isLoginSuccess = MutableLiveData<Boolean>()
+
 
     @ExperimentalCoroutinesApi
     @FlowPreview
-    fun login() =
-        launch(true) {
-            launchFlow {
-                username.value = DataSettings.username
-                password.value = DataSettings.password
+    fun login() = launchUI {
+        launchFlow {
+            DataSettings.username = username.value ?: ""
+            DataSettings.password = password.value ?: ""
 
-
-                DataRepository.INSTANCE.authorizations(
-                    GithubLoginRequest.generate(
-                        BuildConfig.APPLICATION_ID,
-                        BuildConfig.GITHUB_CLIENT_ID,
-                        BuildConfig.GITHUB_CLIENT_SECRET
-                    )
+            DataRepository.INSTANCE.authorizations(
+                GithubLoginRequest.generate(
+                    BuildConfig.APPLICATION_ID,
+                    BuildConfig.GITHUB_CLIENT_ID,
+                    BuildConfig.GITHUB_CLIENT_SECRET
                 )
-            }
-                .flatMapMerge {
-                    launchFlow {
-                        DataRepository.INSTANCE.fetchUserInfo()
-                    }
-                }
-                .flowOn(Dispatchers.IO)
-                .onStart { uiLiveEvent.showLoadingProgressBarEvent.call() }
-                .catch {
-                    val responseThrowable = ExceptionHandler.handleException(it)
-                    uiLiveEvent.showSnackbarEvent.value =
-                        "${responseThrowable.errorCode}:${responseThrowable.errorMessage}"
-                }
-                .onCompletion { uiLiveEvent.dismissLoadingProgressBarEvent.call() }
-                .collect {
-                    repository.run {
-                        cacheUserId(it.id)
-                        cacheName(it.login)
-                        cacheAvatarUrl(it.avatarUrl)
-                    }
-                    isLoginSuccess.value = true
-                }
+            )
         }
+            .flatMapMerge {
+                launchFlow {
+                    DataRepository.INSTANCE.fetchUserInfo()
+                }
+            }
+            .flowOn(Dispatchers.IO)
+            .onStart { uiLiveEvent.showLoadingProgressBarEvent.call() }
+            .catch { uiLiveEvent.errorEvent.value = ExceptionHandler.handleException(it) }
+            .onCompletion { uiLiveEvent.dismissLoadingProgressBarEvent.call() }
+            .collect {
+                DataSettings.user_id = it.id
+                DataSettings.name = it.login
+                DataSettings.avatar_url = it.avatarUrl
+                isLoginSuccess.value = true
+            }
+    }
 
     interface Handlers {
 

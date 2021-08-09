@@ -19,8 +19,11 @@ sealed class BaseThrowable(
 ) :
     Throwable(message, cause) {
 
-    class ExternalThrowable(errorMessage: String, throwable: Throwable) :
-        BaseThrowable(message = errorMessage, cause = throwable)
+    class ExternalThrowable(errorMessage: String?, throwable: Throwable) :
+        BaseThrowable(message = errorMessage, cause = throwable) {
+
+        constructor(throwable: Throwable) : this(throwable.message, throwable)
+    }
 
     class InsideThrowable(
         val errorCode: String,

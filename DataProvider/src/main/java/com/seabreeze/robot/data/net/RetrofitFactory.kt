@@ -4,15 +4,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class RetrofitFactory private constructor(client: OkHttpClient) {
 
     companion object {
 
-        const val API_ROBOT_BASE = "http://101.200.207.61:9650/"
-        //        const val API_ROBOT_BASE = "http://192.168.110.69:9650/"
-
-        const val API_ROBOT_MALL = "http://101.200.207.61:6021/"
+        const val API_ROBOT_MALL = "api.github.com"
 
         @Volatile
         private var instance: RetrofitFactory? = null
@@ -30,7 +28,8 @@ class RetrofitFactory private constructor(client: OkHttpClient) {
     }
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(API_ROBOT_BASE)
+        .baseUrl(String.format("%1\$s://%2\$s/", "https", API_ROBOT_MALL))
+        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)

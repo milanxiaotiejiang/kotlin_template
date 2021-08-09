@@ -3,6 +3,7 @@ package com.thirtydays.kotlin.ui.hook
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.elvishew.xlog.XLog
+import com.seabreeze.robot.base.ext.coroutine.launchUI
 import com.seabreeze.robot.base.framework.mvvm.BaseRepository
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
@@ -23,7 +24,7 @@ class RoomViewModel : BaseViewModel() {
 
     fun clickMvvm() {
         val systemCount = SystemCount(System.currentTimeMillis().toString(), 1)
-        launch {//测试立即返回后数据是否接收到（内存泄漏）
+        launchUI {//测试立即返回后数据是否接收到（内存泄漏）
 
             XLog.e("当前线程是否是主线程 1 : ${Looper.myLooper() == Looper.getMainLooper()}")
             val systemCount = mRepository.getSystemCount(systemCount)
@@ -34,7 +35,7 @@ class RoomViewModel : BaseViewModel() {
     }
 
     fun clickLike() {
-        launch {
+        launchUI {
             val list = mRepository.testLike(System.currentTimeMillis().toString().substring(0, 5))
             XLog.e(list)
         }

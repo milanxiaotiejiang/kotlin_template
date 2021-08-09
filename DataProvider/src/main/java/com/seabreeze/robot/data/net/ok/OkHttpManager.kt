@@ -96,6 +96,7 @@ class OkHttpManager private constructor() {
                 val request = chain.request()
                 val newBuilder = request.newBuilder()
                 newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
+                newBuilder.addHeader("Accept", "application/vnd.github.v3+json")
                 if (DataSettings.token_app.isNotEmpty()) {
                     newBuilder.addHeader("token", DataSettings.token_app)
                         .build()

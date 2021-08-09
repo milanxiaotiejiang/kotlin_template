@@ -10,10 +10,10 @@ import com.seabreeze.robot.base.ext.foundation.Mmkv
  * </pre>
  */
 object DataSettings {
-    var user_id: Int by Mmkv("user_id", -1)
-    var userId by Mmkv("user_id", -1)
     var username by Mmkv("username", "")
     var password by Mmkv("password", "")
+
+    var user_id: Int by Mmkv("user_id", -1)
     var name by Mmkv("name", "")
-    var avatarUrl by Mmkv("avatar_url", "")
+    var avatar_url by Mmkv("avatar_url", "")
 }

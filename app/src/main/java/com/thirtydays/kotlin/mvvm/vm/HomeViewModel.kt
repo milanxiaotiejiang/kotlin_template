@@ -2,7 +2,6 @@ package com.thirtydays.kotlin.mvvm.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
-import com.seabreeze.robot.data.DataSettings.token_app
 import com.seabreeze.robot.data.net.bean.response.AccountPO
 import com.thirtydays.kotlin.mvvm.repository.HomeRepository
 
@@ -24,13 +23,13 @@ class HomeViewModel : BaseViewModel() {
     }
 
     fun login(email: String, password: String) {
-        launch(show = true) {
-            val login = mRepository.login(email, password)
-            if (login.resultStatus) {
-                token_app = login.resultData.accountToken
-                accountData.value = login.resultData
-            }
-        }
+//        launch(show = true) {
+//            val login = mRepository.login(email, password)
+//            if (login.resultStatus) {
+//                token_app = login.resultData.accountToken
+//                accountData.value = login.resultData
+//            }
+//        }
     }
 
 }

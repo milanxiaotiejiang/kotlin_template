@@ -17,7 +17,7 @@ interface RobotService {
 
     @POST("authorizations")
     @Headers("Accept: application/json")
-    fun authorizations(loginRequestData: GithubLoginRequest): UserAccessTokenData
+    suspend fun authorizations(@Body loginRequestData: GithubLoginRequest): UserAccessTokenData
 
     @GET("user")
     suspend fun fetchUserInfo(): UserInfoData

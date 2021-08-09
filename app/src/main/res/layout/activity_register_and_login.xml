@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="LoginViewModel" />
+            type="com.thirtydays.kotlin.ui.login.LoginViewModel" />
 
         <variable
             name="handlers"
-            type="Handlers" />
+            type="com.thirtydays.kotlin.ui.login.LoginViewModel.Handlers" />
 
     </data>
 

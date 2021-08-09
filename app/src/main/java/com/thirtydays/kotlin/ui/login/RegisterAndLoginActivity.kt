@@ -1,9 +1,15 @@
 package com.thirtydays.kotlin.ui.login
 
-import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
+import android.text.Editable
+import android.view.View
+import com.seabreeze.robot.base.ext.coroutine.observe
+import com.seabreeze.robot.base.ext.foundation.yes
+import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.databinding.ActivityRegisterAndLoginBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 /**
  * <pre>
@@ -15,14 +21,39 @@ import com.thirtydays.kotlin.databinding.ActivityRegisterAndLoginBinding
  * </pre>
  */
 class RegisterAndLoginActivity :
-    BaseVmActivity<BaseViewModel, ActivityRegisterAndLoginBinding>(R.layout.activity_register_and_login) {
+    BaseVmActivity<LoginViewModel, ActivityRegisterAndLoginBinding>(R.layout.activity_register_and_login),
+    LoginViewModel.Handlers {
 
     override fun onInitDataBinding() {
+        with(mDataBinding) {
+            viewModel = mViewModel
+            handlers = this@RegisterAndLoginActivity
+        }.apply {
+            registerErrorEvent()
+            registerLoadingProgressBarEvent()
+        }
+    }
+
+    override fun initViewModelActions() {
 
     }
 
     override fun initData() {
+        observe(mViewModel.isLoginSuccess) {
+            it.yes {
+                startMain()
+                this@RegisterAndLoginActivity.finish()
+            }
+        }
+    }
 
+    override fun onUsernameAfterTextChanged(editable: Editable) = mViewModel.checkLoginEnable()
 
+    override fun onPasswordAfterTextChanged(editable: Editable) = mViewModel.checkLoginEnable()
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    override fun onLoginClick(view: View) {
+        mViewModel.login()
     }
 }

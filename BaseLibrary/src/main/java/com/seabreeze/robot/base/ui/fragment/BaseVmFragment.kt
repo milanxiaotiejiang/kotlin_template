@@ -11,7 +11,6 @@ import com.seabreeze.robot.base.ext.coroutine.observe
 import com.seabreeze.robot.base.ext.foundation.onError
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.framework.mvvm.IViewModel
-import com.seabreeze.robot.base.model.CoroutineState
 import com.seabreeze.robot.base.ui.foundation.fragment.BaseFragment
 import java.lang.reflect.ParameterizedType
 
@@ -67,24 +66,15 @@ abstract class BaseVmFragment<out ViewModel : BaseViewModel, DataBinding : ViewD
     }
 
     private fun initViewModelActions() {
-        observe(mViewModel.error) {
-            it.onError()
-        }
-        observe(mViewModel.statusLiveData) {
-            when (it) {
-                is CoroutineState.Loading -> {
-                    showProgressDialog()
-                }
-                is CoroutineState.Finish -> {
-                    dismissProgressDialog()
-                }
-                is CoroutineState.Error -> {
-                    dismissProgressDialog()
-                }
-            }
-        }
     }
 
     abstract fun onInitDataBinding()
 
+    protected fun registerErrorEvent() = observe(mViewModel.uiLiveEvent.errorEvent) { it.onError() }
+
+    protected fun registerLoadingProgressBarEvent() =
+        with(mViewModel.uiLiveEvent) {
+            observe(showLoadingProgressBarEvent) { showProgressDialog() }
+            observe(dismissLoadingProgressBarEvent) { dismissProgressDialog() }
+        }
 }

@@ -1,7 +1,6 @@
 package com.seabreeze.robot.base.ui.activity
 
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -9,7 +8,6 @@ import com.seabreeze.robot.base.ext.coroutine.observe
 import com.seabreeze.robot.base.ext.foundation.onError
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.framework.mvvm.IViewModel
-import com.seabreeze.robot.base.model.CoroutineState
 import com.seabreeze.robot.base.ui.foundation.activity.BaseActivity
 import java.lang.reflect.ParameterizedType
 
@@ -59,48 +57,17 @@ abstract class BaseVmActivity<out ViewModel : BaseViewModel, DataBinding : ViewD
 
     abstract fun onInitDataBinding()
 
-    private fun initViewModelActions() {
-        observe(mViewModel.error) {
-            it.onError()
-        }
-        observe(mViewModel.statusLiveData) {
-            when (it) {
-                is CoroutineState.Loading -> {
-                    showProgressDialog()
-                }
-                is CoroutineState.Finish -> {
-                    dismissProgressDialog()
-                }
-                is CoroutineState.Error -> {
-                    dismissProgressDialog()
-                }
-            }
-        }
+    open fun initViewModelActions() {
+
     }
 
     protected abstract fun initData()
 
-
-    protected fun registerToastEvent() =
-        mViewModel.uiLiveEvent.showToastEvent.observe(this, Observer { toastShort(it) })
+    protected fun registerErrorEvent() = observe(mViewModel.uiLiveEvent.errorEvent) { it.onError() }
 
     protected fun registerLoadingProgressBarEvent() =
-        with(viewModel.uiLiveEvent) {
-            showLoadingProgressBarEvent.observe(this@BaseActivity, Observer {
-                findViewById<FrameLayout>(android.R.id.content).addView(
-                    ProgressBar(this@BaseActivity)
-                        .apply {
-                            layoutParams = FrameLayout.LayoutParams(
-                                FrameLayout.LayoutParams.WRAP_CONTENT,
-                                FrameLayout.LayoutParams.WRAP_CONTENT
-                            ).also { it.gravity = Gravity.CENTER }
-                        }
-                        .also { progressBar = it }
-                )
-            })
-            dismissLoadingProgressBarEvent.observe(this@BaseActivity, Observer {
-                progressBar?.let { findViewById<FrameLayout>(android.R.id.content).removeView(it) }
-            })
+        with(mViewModel.uiLiveEvent) {
+            observe(showLoadingProgressBarEvent) { showProgressDialog() }
+            observe(dismissLoadingProgressBarEvent) { dismissProgressDialog() }
         }
-
 }

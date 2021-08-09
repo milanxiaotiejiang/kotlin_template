@@ -70,7 +70,7 @@ object ExceptionHandler {
                 )
 
             else ->
-                BaseThrowable.ExternalThrowable(errorMessage = "other", throwable = throwable)
+                BaseThrowable.ExternalThrowable(throwable = throwable)
         }
 
 }
