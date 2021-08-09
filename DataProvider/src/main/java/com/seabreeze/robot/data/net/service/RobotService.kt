@@ -1,10 +1,8 @@
 package com.seabreeze.robot.data.net.service
 
 import com.seabreeze.robot.base.model.BaseResult
-import com.seabreeze.robot.data.net.bean.response.AccountPO
-import com.seabreeze.robot.data.net.bean.response.CommodityPO
-import com.seabreeze.robot.data.net.bean.response.Message
-import com.seabreeze.robot.data.net.bean.response.Pager
+import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
+import com.seabreeze.robot.data.net.bean.response.*
 import io.reactivex.Flowable
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -16,6 +14,13 @@ import retrofit2.http.*
  * Des:
  */
 interface RobotService {
+
+    @POST("authorizations")
+    @Headers("Accept: application/json")
+    fun authorizations(loginRequestData: GithubLoginRequest): UserAccessTokenData
+
+    @GET("user")
+    suspend fun fetchUserInfo(): UserInfoData
 
     @POST("/app/v1/login/email")
     suspend fun login(@Body body: RequestBody): BaseResult<AccountPO>

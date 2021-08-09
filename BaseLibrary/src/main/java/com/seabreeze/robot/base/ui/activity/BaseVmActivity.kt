@@ -1,6 +1,7 @@
 package com.seabreeze.robot.base.ui.activity
 
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -78,5 +79,28 @@ abstract class BaseVmActivity<out ViewModel : BaseViewModel, DataBinding : ViewD
     }
 
     protected abstract fun initData()
+
+
+    protected fun registerToastEvent() =
+        mViewModel.uiLiveEvent.showToastEvent.observe(this, Observer { toastShort(it) })
+
+    protected fun registerLoadingProgressBarEvent() =
+        with(viewModel.uiLiveEvent) {
+            showLoadingProgressBarEvent.observe(this@BaseActivity, Observer {
+                findViewById<FrameLayout>(android.R.id.content).addView(
+                    ProgressBar(this@BaseActivity)
+                        .apply {
+                            layoutParams = FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                                FrameLayout.LayoutParams.WRAP_CONTENT
+                            ).also { it.gravity = Gravity.CENTER }
+                        }
+                        .also { progressBar = it }
+                )
+            })
+            dismissLoadingProgressBarEvent.observe(this@BaseActivity, Observer {
+                progressBar?.let { findViewById<FrameLayout>(android.R.id.content).removeView(it) }
+            })
+        }
 
 }

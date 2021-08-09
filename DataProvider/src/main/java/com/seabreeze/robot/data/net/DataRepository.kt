@@ -6,6 +6,7 @@ import com.seabreeze.robot.data.net.api.ImageAPI
 import com.seabreeze.robot.data.net.api.RobotAPI
 import com.seabreeze.robot.data.net.api.impl.ImageImpl
 import com.seabreeze.robot.data.net.api.impl.RobotImpl
+import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
 import com.seabreeze.robot.data.net.bean.response.Message
 import com.seabreeze.robot.data.net.service.SimpleService
 import io.reactivex.Flowable
@@ -34,6 +35,11 @@ class DataRepository private constructor() : RobotAPI, ImageAPI {
             DataRepository()
         }
     }
+
+    override suspend fun authorizations(loginRequestData: GithubLoginRequest) =
+        sRobotImplement.authorizations(loginRequestData)
+
+    override suspend fun fetchUserInfo() = sRobotImplement.fetchUserInfo()
 
     override suspend fun login(email: String, password: String) =
         sRobotImplement.login(email, password)

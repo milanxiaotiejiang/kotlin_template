@@ -49,6 +49,7 @@
         <activity android:name=".ui.loadpage.CommodityActivity" />
         <activity android:name=".ui.glide.GlideActivity" />
         <activity android:name=".ui.simple.SimpleExampleActivity" />
+        <activity android:name=".ui.login.RegisterAndLoginActivity" />
     </application>
 
 </manifest>

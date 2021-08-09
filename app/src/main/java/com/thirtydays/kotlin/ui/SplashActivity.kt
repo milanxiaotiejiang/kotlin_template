@@ -1,13 +1,21 @@
 package com.thirtydays.kotlin.ui
 
-import com.seabreeze.robot.base.ext.execute
-import com.seabreeze.robot.base.framework.mvp.BasePresenter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
+import com.seabreeze.robot.base.ext.foundation.otherwise
+import com.seabreeze.robot.base.ext.foundation.pop
+import com.seabreeze.robot.base.ext.foundation.yes
+import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.router.startMain
-import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
-import com.seabreeze.robot.data.DataSettings.welcome
+import com.seabreeze.robot.base.ui.activity.BaseVmActivity
+import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.databinding.ActivitySplashBinding
-import io.reactivex.Flowable
-import java.util.concurrent.TimeUnit
+import com.thirtydays.kotlin.ktx.DataSettings.user_id
+import com.thirtydays.kotlin.ui.login.RegisterAndLoginActivity
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * <pre>
@@ -18,19 +26,34 @@ import java.util.concurrent.TimeUnit
  * @description : 闪屏页面
  * </pre>
  */
-class SplashActivity : BaseMvpActivity<SplashPresenter, ActivitySplashBinding>() {
+class SplashActivity :
+    BaseVmActivity<SplashViewModel, ActivitySplashBinding>(R.layout.activity_splash) {
+
+    override fun onInitDataBinding() {
+        with(mViewModel) {
+            navigateToPage()
+            isNavigateToMainActivity.observe(this@SplashActivity, Observer {
+                it
+                    .yes { startMain() }
+                    .otherwise { pop<RegisterAndLoginActivity>() }
+                finish()
+            })
+        }
+    }
 
     override fun initData() {
 
-        addDisposable(
-            Flowable.just(welcome)
-                .delay(2, TimeUnit.SECONDS)
-                .execute(this)
-                .subscribe {
-                    startMain()
-                    finish()
-                })
     }
 }
 
-class SplashPresenter : BasePresenter<SplashActivity>()
+class SplashViewModel : BaseViewModel() {
+
+    private val _isNavigateToMainActivity = MutableLiveData<Boolean>()
+    var isNavigateToMainActivity: LiveData<Boolean> = _isNavigateToMainActivity
+
+    fun navigateToPage() =
+        viewModelScope.launch {
+            delay(2000)
+            _isNavigateToMainActivity.value = user_id != -1
+        }
+}

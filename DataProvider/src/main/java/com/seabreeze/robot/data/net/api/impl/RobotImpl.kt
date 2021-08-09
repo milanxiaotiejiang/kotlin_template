@@ -9,6 +9,7 @@ import com.seabreeze.robot.data.common.Common.Companion.REQUEST_PAGE_SIZE
 import com.seabreeze.robot.data.net.BaseImpl
 import com.seabreeze.robot.data.net.api.RobotAPI
 import com.seabreeze.robot.data.net.bean.request.EmailLoginDTO
+import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
 import com.seabreeze.robot.data.net.bean.response.Message
 import com.seabreeze.robot.data.net.service.RobotService
 import io.reactivex.Flowable
@@ -22,6 +23,11 @@ import java.util.*
  * Des:
  */
 class RobotImpl : BaseImpl<RobotService>(), RobotAPI {
+
+    override suspend fun authorizations(loginRequestData: GithubLoginRequest) =
+        mService.authorizations(loginRequestData)
+
+    override suspend fun fetchUserInfo() = mService.fetchUserInfo()
 
     override suspend fun login(email: String, password: String) =
         mService.login(

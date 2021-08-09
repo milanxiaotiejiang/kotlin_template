@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="LoginViewModel" />
+
+        <variable
+            name="handlers"
+            type="Handlers" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <com.seabreeze.robot.base.widget.round.RoundTextView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="38dp"
+            android:enabled="@{viewModel.loginEnable}"
+            android:gravity="center"
+            android:onClick="@{handlers::onLoginClick}"
+            android:shadowColor="@color/common_button_shadow_color"
+            android:shadowDy="3"
+            android:text="登录"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_password"
+            app:rv_backgroundColor="@color/common_button_background_color_unable"
+            app:rv_backgroundPressColor="@color/common_button_background_color_enable"
+            app:rv_cornerRadius="30dp" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="38dp"
+            android:afterTextChanged="@{handlers::onPasswordAfterTextChanged}"
+            android:background="@drawable/shape_common_edit_text_background"
+            android:drawableStart="@mipmap/ic_password"
+            android:drawablePadding="12dp"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:paddingStart="26dp"
+            android:paddingEnd="26dp"
+            android:text="@={viewModel.password}"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_username" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="46dp"
+            android:layout_marginEnd="38dp"
+            android:afterTextChanged="@{handlers::onUsernameAfterTextChanged}"
+            android:background="@drawable/shape_common_edit_text_background"
+            android:drawableStart="@mipmap/ic_phone_number"
+            android:drawablePadding="12dp"
+            android:hint="请输入用户名"
+            android:paddingStart="26dp"
+            android:paddingEnd="26dp"
+            android:text="@={viewModel.username}"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="52dp"
+            android:background="@mipmap/ic_github"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorBlack"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
