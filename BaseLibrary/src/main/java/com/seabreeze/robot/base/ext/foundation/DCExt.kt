@@ -11,9 +11,16 @@ import com.seabreeze.robot.base.model.BaseResult
  * @description : 数据转换工具类
  * </pre>
  */
+//公司基类判断，下面为 wanandroid API
+//inline fun <reified T> BaseResult<T>.dcEither() =
+//    resultStatus.yes {
+//        Either.left(resultData)
+//    }.otherwise {
+//        Either.right(BaseThrowable.InsideThrowable(errorCode, errorMsg))
+//    }
 inline fun <reified T> BaseResult<T>.dcEither() =
-    resultStatus.yes {
-        Either.left(resultData)
+    (errorCode == 0).yes {
+        Either.left(data)
     }.otherwise {
-        Either.right(BaseThrowable.InsideThrowable(errorCode, errorMessage))
+        Either.right(BaseThrowable.InsideThrowable(errorCode.toString(), errorMsg))
     }

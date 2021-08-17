@@ -9,4 +9,12 @@
     <color name="default_track_color">#f3e5dd</color>
 
     <color name="picture_color_light_grey">#999999</color>
+
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="color333333">#333333</color>
+    <color name="color666666">#666666</color>
+    <color name="colorEFEFEF">#EFEFEF</color>
+    <color name="colorCCCCCC">#CCCCCC</color>
 </resources>

@@ -1,17 +1,18 @@
 package com.seabreeze.robot.base.model
 
+/**
+此为本公司接口返回，注意和 wanandroid 区分
 data class BaseResult<T>(
-    val resultStatus: Boolean,
-    val errorCode: String,
-    val errorMessage: String,
-    val resultData: T
+val resultStatus: Boolean,
+val errorCode: String,
+val errorMessage: String,
+val resultData: T
 )
-
-data class BaseNullResult<T>(
-    val resultStatus: Boolean,
-    val errorCode: String?,
-    val errorMessage: String?,
-    val resultData: T?
+ */
+data class BaseResult<T>(
+    val errorCode: Int,//wanandroid 中判断 errorCode 为 0 正常
+    val errorMsg: String,
+    val `data`: T
 )
 
 data class ListModel<T>(

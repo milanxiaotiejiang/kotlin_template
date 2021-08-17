@@ -36,8 +36,6 @@ android {
 
         def properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        buildConfigField("String", "GITHUB_CLIENT_ID", properties.getProperty("github_client_id"))
-        buildConfigField("String", "GITHUB_CLIENT_SECRET", properties.getProperty("github_client_secret"))
     }
 
     signingConfigs {
@@ -118,7 +116,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation project(path: ':DataProvider')
-    implementation project(path: ':ThirdProvider')
+    implementation project(path: ':UserCenter')
 
     kapt "com.alibaba:arouter-compiler:1.2.2"
     kapt 'androidx.annotation:annotation:1.1.0'

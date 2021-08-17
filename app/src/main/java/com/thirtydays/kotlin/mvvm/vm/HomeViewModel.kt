@@ -1,8 +1,6 @@
 package com.thirtydays.kotlin.mvvm.vm
 
-import androidx.lifecycle.MutableLiveData
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
-import com.seabreeze.robot.data.net.bean.response.AccountPO
 import com.thirtydays.kotlin.mvvm.repository.HomeRepository
 
 /**
@@ -18,9 +16,9 @@ class HomeViewModel : BaseViewModel() {
 
     private val mRepository: HomeRepository = HomeRepository()
 
-    val accountData: MutableLiveData<AccountPO> by lazy {
-        MutableLiveData<AccountPO>()
-    }
+//    val accountData: MutableLiveData<AccountPO> by lazy {
+//        MutableLiveData<AccountPO>()
+//    }
 
     fun login(email: String, password: String) {
 //        launch(show = true) {

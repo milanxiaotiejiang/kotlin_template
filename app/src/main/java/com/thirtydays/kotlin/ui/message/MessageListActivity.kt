@@ -2,12 +2,7 @@ package com.thirtydays.kotlin.ui.message
 
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.jakewharton.rxbinding3.view.clicks
-import com.seabreeze.robot.base.ext.foundation.BaseThrowable
-import com.seabreeze.robot.base.ext.foundation.Either
-import com.seabreeze.robot.base.router.startMessage
 import com.seabreeze.robot.base.ui.activity.BaseMvpActivity
-import com.seabreeze.robot.data.net.bean.response.Message
-import com.thirtydays.kotlin.adapter.MessageAdapter
 import com.thirtydays.kotlin.databinding.ActivityMessageListBinding
 import com.thirtydays.kotlin.mvp.MessageListPresenter
 import com.thirtydays.kotlin.mvp.MessageListView
@@ -23,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class MessageListActivity : BaseMvpActivity<MessageListPresenter, ActivityMessageListBinding>(),
     MessageListView {
 
-    private lateinit var mAdapter: MessageAdapter
+//    private lateinit var mAdapter: MessageAdapter
 
     override fun initData() {
 
@@ -40,24 +35,23 @@ class MessageListActivity : BaseMvpActivity<MessageListPresenter, ActivityMessag
             )
         )
 
-        mAdapter = MessageAdapter()
-        mViewBinding.recyclerView.adapter = mAdapter
-
-        mAdapter.setOnItemClickListener { _, _, position ->
-            val message = mAdapter.data[position]
-            startMessage(message.messageTitle, message.messageId.toString(), true)
-        }
-
-        mPresenter.message()
+//        mAdapter = MessageAdapter()
+//        mViewBinding.recyclerView.adapter = mAdapter
+//
+//        mAdapter.setOnItemClickListener { _, _, position ->
+//            val message = mAdapter.data[position]
+//            startMessage(message.messageTitle, message.messageId.toString(), true)
+//        }
+//
+//        mPresenter.message()
     }
 
-    override fun onMessage(either: Either<List<Message>, BaseThrowable>) {
-        either.fold({
-            mAdapter.setList(it)
-        }, {
-            onError(it)
-        })
-
-    }
+//    override fun onMessage(either: Either<List<Message>, BaseThrowable>) {
+//        either.fold({
+//            mAdapter.setList(it)
+//        }, {
+//            onError(it)
+//        })
+//    }
 
 }

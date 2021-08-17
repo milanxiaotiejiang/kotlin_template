@@ -185,6 +185,7 @@ class GlideEngine private constructor() : ImageEngine, com.luck.picture.lib.engi
     ) {
         GlideApp.with(context)
             .load(url)
+            .thumbnail()
             .apply(
                 RequestOptions()
                     .placeholder(resourceId)

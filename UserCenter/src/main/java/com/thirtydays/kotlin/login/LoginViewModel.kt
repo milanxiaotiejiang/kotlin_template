@@ -1,4 +1,4 @@
-package com.thirtydays.kotlin.ui.login
+package com.thirtydays.kotlin.login
 
 import android.text.Editable
 import android.view.View
@@ -7,11 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import com.seabreeze.robot.base.ext.coroutine.ExceptionHandler
 import com.seabreeze.robot.base.ext.coroutine.launchFlow
 import com.seabreeze.robot.base.ext.coroutine.launchUI
+import com.seabreeze.robot.base.ext.foundation.dcEither
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
+import com.seabreeze.robot.data.DataSettings
 import com.seabreeze.robot.data.net.DataRepository
-import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
-import com.thirtydays.kotlin.BuildConfig
-import com.thirtydays.kotlin.ktx.DataSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -39,7 +38,6 @@ class LoginViewModel : BaseViewModel() {
 
     val isLoginSuccess = MutableLiveData<Boolean>()
 
-
     @ExperimentalCoroutinesApi
     @FlowPreview
     fun login() = launchUI {
@@ -47,28 +45,24 @@ class LoginViewModel : BaseViewModel() {
             DataSettings.username = username.value ?: ""
             DataSettings.password = password.value ?: ""
 
-            DataRepository.INSTANCE.authorizations(
-                GithubLoginRequest.generate(
-                    BuildConfig.APPLICATION_ID,
-                    BuildConfig.GITHUB_CLIENT_ID,
-                    BuildConfig.GITHUB_CLIENT_SECRET
+            DataRepository.INSTANCE.userLogin(
+                mapOf(
+                    Pair("username", DataSettings.username),
+                    Pair("password", DataSettings.password)
                 )
             )
         }
-            .flatMapMerge {
-                launchFlow {
-                    DataRepository.INSTANCE.fetchUserInfo()
-                }
-            }
             .flowOn(Dispatchers.IO)
             .onStart { uiLiveEvent.showLoadingProgressBarEvent.call() }
             .catch { uiLiveEvent.errorEvent.value = ExceptionHandler.handleException(it) }
             .onCompletion { uiLiveEvent.dismissLoadingProgressBarEvent.call() }
-            .collect {
-                DataSettings.user_id = it.id
-                DataSettings.name = it.login
-                DataSettings.avatar_url = it.avatarUrl
-                isLoginSuccess.value = true
+            .collect { result ->
+                result.dcEither().fold({
+                    DataSettings.saveAccount(it)
+                    isLoginSuccess.value = true
+                }, {
+                    uiLiveEvent.errorEvent.postValue(it)
+                })
             }
     }
 

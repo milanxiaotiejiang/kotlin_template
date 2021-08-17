@@ -1,6 +1,5 @@
 package com.thirtydays.kotlin.ui.main.home
 
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.seabreeze.robot.base.ext.foundation.pop
 import com.seabreeze.robot.base.ui.fragment.BaseVmFragment
@@ -14,7 +13,6 @@ import com.thirtydays.kotlin.ui.glide.GlideActivity
 import com.thirtydays.kotlin.ui.hook.HookActivity
 import com.thirtydays.kotlin.ui.hook.RoomActivity
 import com.thirtydays.kotlin.ui.loadpage.CommodityActivity
-import com.thirtydays.kotlin.ui.message.MessageListActivity
 import com.thirtydays.kotlin.ui.simple.SimpleExampleActivity
 import okhttp3.Request
 import java.io.IOException
@@ -24,9 +22,9 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout
 
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mViewModel
-        mViewModel.accountData.observe(this) {
-            pop<MessageListActivity>()
-        }
+//        mViewModel.accountData.observe(this) {
+//            pop<MessageListActivity>()
+//        }
     }
 
     override fun requestData() {

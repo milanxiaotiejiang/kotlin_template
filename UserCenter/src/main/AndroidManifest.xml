@@ -7,7 +7,6 @@
 
     <application>
         <activity android:name=".ui.ShareActivity" />
-        <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.PayActivity" />
 
         <activity
@@ -36,6 +35,8 @@
             android:name="com.thirtydays.kotlin.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+
+        <activity android:name="com.thirtydays.kotlin.login.LoginActivity" />
 
     </application>
 

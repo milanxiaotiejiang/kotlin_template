@@ -1,11 +1,6 @@
 package com.thirtydays.kotlin.mvvm.repository
 
 import com.seabreeze.robot.base.framework.mvvm.BaseRepository
-import com.seabreeze.robot.data.DataApplication.Companion.dataRepository
-import com.seabreeze.robot.base.model.BaseResult
-import com.seabreeze.robot.data.net.bean.response.AccountPO
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 
 /**
@@ -18,10 +13,10 @@ import kotlinx.coroutines.withContext
  * </pre>
  */
 class HomeRepository : BaseRepository() {
-    suspend fun login(email: String, password: String): BaseResult<AccountPO> {
-        return withContext(Dispatchers.IO) {
-            Thread.sleep(1000)
-            dataRepository.login(email, password)
-        }
-    }
+//    suspend fun login(email: String, password: String): BaseResult<AccountPO> {
+//        return withContext(Dispatchers.IO) {
+//            Thread.sleep(1000)
+//            dataRepository.login(email, password)
+//        }
+//    }
 }

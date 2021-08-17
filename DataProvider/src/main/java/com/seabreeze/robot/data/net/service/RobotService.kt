@@ -1,41 +1,44 @@
 package com.seabreeze.robot.data.net.service
 
 import com.seabreeze.robot.base.model.BaseResult
-import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
-import com.seabreeze.robot.data.net.bean.response.*
-import io.reactivex.Flowable
-import okhttp3.RequestBody
+import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
+import com.seabreeze.robot.data.net.bean.response.UserInfo
 import retrofit2.http.*
 
 
 /**
  * User: milan
  * Time: 2020/4/9 14:13
- * Des:
+ * Des: https://www.wanandroid.com/ API
  */
 interface RobotService {
 
-    @POST("authorizations")
-    @Headers("Accept: application/json")
-    suspend fun authorizations(@Body loginRequestData: GithubLoginRequest): UserAccessTokenData
+    // wanandroid API 不支持 @Body 方式，此处仅当作一个示例，推荐使用
+    @POST("user/login")
+    suspend fun userLogin(@Body userLoginRequest: UserLoginRequest): BaseResult<UserInfo>
 
-    @GET("user")
-    suspend fun fetchUserInfo(): UserInfoData
+    //可以使用此种方式
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun userLogin(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): BaseResult<UserInfo>
 
-    @POST("/app/v1/login/email")
-    suspend fun login(@Body body: RequestBody): BaseResult<AccountPO>
+    // 最不推荐的一种方式
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun userLogin(@FieldMap map: Map<String, String>): BaseResult<UserInfo>
 
-    @GET("/app/v1/message")
-    fun message(@Query("startTime") startTime: String): Flowable<BaseResult<List<Message>>>
+    @FormUrlEncoded
+    @POST("user/register")
+    suspend fun userRegister(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("repassword") repassword: String
+    ): BaseResult<UserInfo>
 
-    @GET("/app/v1/commodity")
-    suspend fun commodity(
-        @Query("pageNo") pageNo: Int,
-        @Query("pageSize") pageSize: Int
-    ): BaseResult<Pager<CommodityPO>>
-
-
-    @GET("/app/v1/message/{messageId}")
-    fun messageId(@Path("messageId") messageId: String): Flowable<BaseResult<Message>>
+    @GET("user/logout/json")
+    suspend fun userLogout(): BaseResult<Any>
 
 }

@@ -3,14 +3,12 @@ package com.thirtydays.kotlin.ui.loadpage
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
-import com.elvishew.xlog.XLog
 import com.seabreeze.robot.base.ext.view.setOnIntervalClickListener
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.seabreeze.robot.base.widget.loadpage.LoadPageStatus
 import com.seabreeze.robot.base.widget.loadpage.LoadPageViewForStatus
 import com.seabreeze.robot.base.widget.loadpage.SimplePageViewForStatus
 import com.thirtydays.kotlin.R
-import com.thirtydays.kotlin.adapter.DeviceAdapter
 import com.thirtydays.kotlin.databinding.ActivityCommodityBinding
 import com.thirtydays.kotlin.mvvm.vm.CommodityViewModel
 
@@ -28,7 +26,7 @@ class CommodityActivity :
     private val loadPageView = SimplePageViewForStatus()
     private var rootView: LoadPageViewForStatus? = null
 
-    private var mAdapter = DeviceAdapter()
+//    private var mAdapter = DeviceAdapter()
 
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mViewModel
@@ -40,29 +38,29 @@ class CommodityActivity :
                             rootView,
                             loadPageStatus = loadPageStatus
                         )
-                        mAdapter.setEmptyView(rootView)
+//                        mAdapter.setEmptyView(rootView)
                     }
                 })
-            listModelLiveData.observe(this@CommodityActivity, Observer {
-                it.showData?.let { list ->
-                    mAdapter.run {
-                        if (it.isRefresh)
-                            setList(list)
-                        else
-                            addData(list)
-                        loadMoreModule.isEnableLoadMore = true
-                        loadMoreModule.loadMoreComplete()
-                    }
-                }
-                it.showError?.let { errorMsg ->//加载失败处理
-                    mAdapter.loadMoreModule.loadMoreFail()
-                    showToast(errorMsg)
-                }
-                if (it.isRefresh)
-                    mDataBinding.refreshLayout.finishRefresh(it.isFinishRefresh)
-                if (it.showEnd)
-                    mAdapter.loadMoreModule.loadMoreEnd()
-            })
+//            listModelLiveData.observe(this@CommodityActivity, Observer {
+//                it.showData?.let { list ->
+//                    mAdapter.run {
+//                        if (it.isRefresh)
+//                            setList(list)
+//                        else
+//                            addData(list)
+//                        loadMoreModule.isEnableLoadMore = true
+//                        loadMoreModule.loadMoreComplete()
+//                    }
+//                }
+//                it.showError?.let { errorMsg ->//加载失败处理
+//                    mAdapter.loadMoreModule.loadMoreFail()
+//                    showToast(errorMsg)
+//                }
+//                if (it.isRefresh)
+//                    mDataBinding.refreshLayout.finishRefresh(it.isFinishRefresh)
+//                if (it.showEnd)
+//                    mAdapter.loadMoreModule.loadMoreEnd()
+//            })
         }
     }
 
@@ -85,15 +83,15 @@ class CommodityActivity :
                     DividerItemDecoration.VERTICAL
                 )
             )
-            adapter = mAdapter
+//            adapter = mAdapter
         }
 
-        mAdapter.apply {
-            loadMoreModule.setOnLoadMoreListener(this@CommodityActivity)
-            setOnItemClickListener { _, _, position ->
-                XLog.e("$position")
-            }
-        }
+//        mAdapter.apply {
+//            loadMoreModule.setOnLoadMoreListener(this@CommodityActivity)
+//            setOnItemClickListener { _, _, position ->
+//                XLog.e("$position")
+//            }
+//        }
 
         mDataBinding.refreshLayout.setOnRefreshListener { refresh() }
         mDataBinding.refreshLayout.setEnableLoadMore(false)
@@ -102,11 +100,11 @@ class CommodityActivity :
     }
 
     private fun refresh() {
-        mViewModel.commodity(true, mAdapter.data.size)
+//        mViewModel.commodity(true, mAdapter.data.size)
     }
 
     override fun onLoadMore() {
-        mViewModel.commodity(false, mAdapter.data.size)
+//        mViewModel.commodity(false, mAdapter.data.size)
     }
 
 }

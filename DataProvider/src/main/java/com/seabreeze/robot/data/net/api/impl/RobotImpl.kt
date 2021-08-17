@@ -1,20 +1,9 @@
 package com.seabreeze.robot.data.net.api.impl
 
-import com.seabreeze.robot.base.ext.tool.FORMAT_YMDHMS
-import com.seabreeze.robot.base.ext.tool.encryption
-import com.seabreeze.robot.base.ext.tool.gToJson
-import com.seabreeze.robot.base.ext.tool.getTimeFormatStr
-import com.seabreeze.robot.base.model.BaseResult
-import com.seabreeze.robot.data.common.Common.Companion.REQUEST_PAGE_SIZE
 import com.seabreeze.robot.data.net.BaseImpl
 import com.seabreeze.robot.data.net.api.RobotAPI
-import com.seabreeze.robot.data.net.bean.request.EmailLoginDTO
-import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
-import com.seabreeze.robot.data.net.bean.response.Message
+import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
 import com.seabreeze.robot.data.net.service.RobotService
-import io.reactivex.Flowable
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.util.*
 
 
 /**
@@ -24,32 +13,18 @@ import java.util.*
  */
 class RobotImpl : BaseImpl<RobotService>(), RobotAPI {
 
-    override suspend fun authorizations(loginRequestData: GithubLoginRequest) =
-        mService.authorizations(loginRequestData)
+    override suspend fun userLogin(userLoginRequest: UserLoginRequest) =
+        mService.userLogin(userLoginRequest)
 
-    override suspend fun fetchUserInfo() = mService.fetchUserInfo()
+    override suspend fun userLogin(username: String, password: String) =
+        mService.userLogin(username, password)
 
-    override suspend fun login(email: String, password: String) =
-        mService.login(
-            EmailLoginDTO(
-                email,
-                password.encryption()
-            ).gToJson().toRequestBody()
-        )
+    override suspend fun userLogin(map: Map<String, String>) =
+        mService.userLogin(map)
 
-    override fun message(): Flowable<BaseResult<List<Message>>> {
-        val c = Calendar.getInstance()
-        c.time = Date()
-        c.add(Calendar.MONTH, -1)
-        val m = c.time
+    override suspend fun userRegister(username: String, password: String, repassword: String) =
+        mService.userRegister(username, password, repassword)
 
-        val timeFormatLong = getTimeFormatStr(FORMAT_YMDHMS, m)
-        return mService.message(timeFormatLong)
-    }
-
-    override suspend fun commodity(pageNo: Int) = mService.commodity(pageNo, REQUEST_PAGE_SIZE)
-
-    override fun messageId(messageId: String): Flowable<BaseResult<Message>> =
-        mService.messageId(messageId)
+    override suspend fun userLogout() = mService.userLogout()
 
 }

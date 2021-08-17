@@ -1,15 +1,12 @@
 package com.seabreeze.robot.data.net
 
-import com.seabreeze.robot.base.model.BaseResult
 import com.seabreeze.robot.data.DataApplication.Companion.retrofitFactory
 import com.seabreeze.robot.data.net.api.ImageAPI
 import com.seabreeze.robot.data.net.api.RobotAPI
 import com.seabreeze.robot.data.net.api.impl.ImageImpl
 import com.seabreeze.robot.data.net.api.impl.RobotImpl
-import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
-import com.seabreeze.robot.data.net.bean.response.Message
-import com.seabreeze.robot.data.net.service.SimpleService
-import io.reactivex.Flowable
+import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
+import com.seabreeze.robot.data.net.service.FastService
 
 /**
  * User: milan
@@ -29,29 +26,27 @@ class DataRepository private constructor() : RobotAPI, ImageAPI {
         private lateinit var sImageImplement: ImageImpl
 
         // TODO:  DataRepository 此处开放更具简单的调用，不满足接口隔离原则，暂时支持 com.seabreeze.robot.data.net.service.SimpleService
-        val sSimpleImplement: SimpleService = retrofitFactory.create(SimpleService::class.java)
+        val sFastImplement: FastService = retrofitFactory.create(FastService::class.java)
 
         val INSTANCE: DataRepository by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             DataRepository()
         }
     }
 
-    override suspend fun authorizations(loginRequestData: GithubLoginRequest) =
-        sRobotImplement.authorizations(loginRequestData)
-
-    override suspend fun fetchUserInfo() = sRobotImplement.fetchUserInfo()
-
-    override suspend fun login(email: String, password: String) =
-        sRobotImplement.login(email, password)
-
-
-    override fun message() = sRobotImplement.message()
-
-    override suspend fun commodity(pageNo: Int) = sRobotImplement.commodity(pageNo)
-
-    override fun messageId(messageId: String): Flowable<BaseResult<Message>> =
-        sRobotImplement.messageId(messageId)
 
     override fun downloadPicFromNet(fileUrl: String) = sImageImplement.downloadPicFromNet(fileUrl)
+
+    override suspend fun userLogin(userLoginRequest: UserLoginRequest) =
+        sRobotImplement.userLogin(userLoginRequest)
+
+    override suspend fun userLogin(username: String, password: String) =
+        sRobotImplement.userLogin(username, password)
+
+    override suspend fun userLogin(map: Map<String, String>) = sRobotImplement.userLogin(map)
+
+    override suspend fun userRegister(username: String, password: String, repassword: String) =
+        sRobotImplement.userRegister(username, password, repassword)
+
+    override suspend fun userLogout() = sRobotImplement.userLogout()
 
 }

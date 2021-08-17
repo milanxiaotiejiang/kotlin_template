@@ -1,10 +1,8 @@
 package com.seabreeze.robot.data.net.api
 
 import com.seabreeze.robot.base.model.BaseResult
-import com.seabreeze.robot.data.net.bean.request.GithubLoginRequest
-import com.seabreeze.robot.data.net.bean.response.*
-import io.reactivex.Flowable
-import retrofit2.http.Body
+import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
+import com.seabreeze.robot.data.net.bean.response.UserInfo
 
 /**
  * User: milan
@@ -13,16 +11,18 @@ import retrofit2.http.Body
  */
 interface RobotAPI {
 
-    suspend fun authorizations(@Body loginRequestData: GithubLoginRequest): UserAccessTokenData
+    suspend fun userLogin(userLoginRequest: UserLoginRequest): BaseResult<UserInfo>
 
-    suspend fun fetchUserInfo(): UserInfoData
+    suspend fun userLogin(username: String, password: String): BaseResult<UserInfo>
 
-    suspend fun login(email: String, password: String): BaseResult<AccountPO>
+    suspend fun userLogin(map: Map<String, String>): BaseResult<UserInfo>
 
-    fun message(): Flowable<BaseResult<List<Message>>>
+    suspend fun userRegister(
+        username: String,
+        password: String,
+        repassword: String
+    ): BaseResult<UserInfo>
 
-    suspend fun commodity(pageNo: Int): BaseResult<Pager<CommodityPO>>
-
-    fun messageId(messageId: String): Flowable<BaseResult<Message>>
+    suspend fun userLogout(): BaseResult<Any>
 
 }

@@ -1,5 +1,4 @@
-include ':ThirdProvider'
 rootProject.name = "kotlin_template"
-include ':app', ':DataProvider', ':BaseLibrary',
+include ':app', ':DataProvider', ':BaseLibrary', ':UserCenter',
         ':fragmentation', ':fragmentation_core',
         ':ASM_Transform', ':ASM_okhttp_plugin', ':ASM_okhttp_library'

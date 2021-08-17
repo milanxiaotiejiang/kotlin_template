@@ -15,6 +15,7 @@ public interface RouterPath {
     //用户模块
     interface UserCenter {
         String PATH_APP_LOGIN = "/userCenter/login";
+        String PATH_APP_REGISTER = "/userCenter/register";
         String PATH_APP_SHARE = "/userCenter/share";
         String PATH_APP_PAY = "/userCenter/pay";
     }

@@ -5,15 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.seabreeze.robot.base.ext.foundation.otherwise
-import com.seabreeze.robot.base.ext.foundation.pop
 import com.seabreeze.robot.base.ext.foundation.yes
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
+import com.seabreeze.robot.base.router.startLogin
 import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.databinding.ActivitySplashBinding
 import com.thirtydays.kotlin.ktx.DataSettings.user_id
-import com.thirtydays.kotlin.ui.login.RegisterAndLoginActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,7 +34,7 @@ class SplashActivity :
             isNavigateToMainActivity.observe(this@SplashActivity, Observer {
                 it
                     .yes { startMain() }
-                    .otherwise { pop<RegisterAndLoginActivity>() }
+                    .otherwise { startLogin() }
                 finish()
             })
         }

@@ -1,13 +1,16 @@
-package com.thirtydays.kotlin.ui.login
+package com.thirtydays.kotlin.login
 
 import android.text.Editable
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.seabreeze.robot.base.ext.coroutine.observe
 import com.seabreeze.robot.base.ext.foundation.yes
+import com.seabreeze.robot.base.router.RouterPath
 import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
-import com.thirtydays.kotlin.R
-import com.thirtydays.kotlin.databinding.ActivityRegisterAndLoginBinding
+import com.seabreeze.robot.data.DataSettings
+import com.seabreeze.robot.third.R
+import com.seabreeze.robot.third.databinding.ActivityLoginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -20,14 +23,15 @@ import kotlinx.coroutines.FlowPreview
  * @description : TODO
  * </pre>
  */
-class RegisterAndLoginActivity :
-    BaseVmActivity<LoginViewModel, ActivityRegisterAndLoginBinding>(R.layout.activity_register_and_login),
+@Route(path = RouterPath.UserCenter.PATH_APP_LOGIN)
+class LoginActivity :
+    BaseVmActivity<LoginViewModel, ActivityLoginBinding>(R.layout.activity_login),
     LoginViewModel.Handlers {
 
     override fun onInitDataBinding() {
         with(mDataBinding) {
             viewModel = mViewModel
-            handlers = this@RegisterAndLoginActivity
+            handlers = this@LoginActivity
         }.apply {
             registerErrorEvent()
             registerLoadingProgressBarEvent()
@@ -35,16 +39,17 @@ class RegisterAndLoginActivity :
     }
 
     override fun initViewModelActions() {
-
-    }
-
-    override fun initData() {
         observe(mViewModel.isLoginSuccess) {
             it.yes {
                 startMain()
-                this@RegisterAndLoginActivity.finish()
+                this@LoginActivity.finish()
             }
         }
+    }
+
+    override fun initData() {
+        mViewModel.username.postValue(DataSettings.username)
+        mViewModel.password.postValue(DataSettings.password)
     }
 
     override fun onUsernameAfterTextChanged(editable: Editable) = mViewModel.checkLoginEnable()

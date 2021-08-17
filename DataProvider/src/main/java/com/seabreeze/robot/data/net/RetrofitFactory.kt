@@ -10,7 +10,7 @@ class RetrofitFactory private constructor(client: OkHttpClient) {
 
     companion object {
 
-        const val API_ROBOT_MALL = "api.github.com"
+        const val API_ROBOT_MALL = "https://www.wanandroid.com/"
 
         @Volatile
         private var instance: RetrofitFactory? = null
@@ -28,7 +28,7 @@ class RetrofitFactory private constructor(client: OkHttpClient) {
     }
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(String.format("%1\$s://%2\$s/", "https", API_ROBOT_MALL))
+        .baseUrl(API_ROBOT_MALL)
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

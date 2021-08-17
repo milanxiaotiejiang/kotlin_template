@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="common_button_background_color_unable">#cfd6e0</color>
+    <color name="common_button_background_color_enable">#5e616d</color>
+    <color name="common_button_shadow_color">#a8acbf</color>
+
+</resources>
