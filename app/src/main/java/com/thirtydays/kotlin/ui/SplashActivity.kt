@@ -2,7 +2,6 @@ package com.thirtydays.kotlin.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.seabreeze.robot.base.ext.foundation.otherwise
 import com.seabreeze.robot.base.ext.foundation.yes
@@ -10,9 +9,9 @@ import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.router.startLogin
 import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
+import com.seabreeze.robot.data.DataSettings.localAccount
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.databinding.ActivitySplashBinding
-import com.thirtydays.kotlin.ktx.DataSettings.user_id
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -31,7 +30,7 @@ class SplashActivity :
     override fun onInitDataBinding() {
         with(mViewModel) {
             navigateToPage()
-            isNavigateToMainActivity.observe(this@SplashActivity, Observer {
+            isNavigateToMainActivity.observe(this@SplashActivity, {
                 it
                     .yes { startMain() }
                     .otherwise { startLogin() }
@@ -53,6 +52,6 @@ class SplashViewModel : BaseViewModel() {
     fun navigateToPage() =
         viewModelScope.launch {
             delay(2000)
-            _isNavigateToMainActivity.value = user_id != -1
+            _isNavigateToMainActivity.value = localAccount() != null
         }
 }

@@ -37,6 +37,7 @@
             android:launchMode="singleTop" />
 
         <activity android:name="com.thirtydays.kotlin.login.LoginActivity" />
+        <activity android:name="com.thirtydays.kotlin.register.RegisterActivity" />
 
     </application>
 

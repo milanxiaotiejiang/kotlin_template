@@ -4,12 +4,14 @@ import android.text.Editable
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.seabreeze.robot.base.ext.coroutine.observe
+import com.seabreeze.robot.base.ext.foundation.pop
 import com.seabreeze.robot.base.ext.foundation.yes
 import com.seabreeze.robot.base.router.RouterPath
 import com.seabreeze.robot.base.router.startMain
 import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.seabreeze.robot.third.R
 import com.seabreeze.robot.third.databinding.ActivityRegisterBinding
+import com.thirtydays.kotlin.login.LoginActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -42,7 +44,7 @@ class RegisterActivity :
     }
 
     override fun initData() {
-        observe(mViewModel.isLoginSuccess) {
+        observe(mViewModel.isRegisterSuccess) {
             it.yes {
                 startMain()
                 this@RegisterActivity.finish()
@@ -56,9 +58,14 @@ class RegisterActivity :
 
     override fun onRePasswordAfterTextChanged(editable: Editable) = mViewModel.checkLoginEnable()
 
+    override fun onLoginClick(view: View) {
+        pop<LoginActivity>()
+        finish()
+    }
+
     @ExperimentalCoroutinesApi
     @FlowPreview
-    override fun onLoginClick(view: View) {
-        mViewModel.login()
+    override fun onRegisterClick(view: View) {
+        mViewModel.register()
     }
 }

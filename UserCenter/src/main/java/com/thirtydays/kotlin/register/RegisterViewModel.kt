@@ -31,7 +31,7 @@ class RegisterViewModel : BaseViewModel() {
     val repassword = MutableLiveData<String>()
 
     private val _isLoginEnable = MutableLiveData<Boolean>()
-    val isLoginEnable: LiveData<Boolean> = _isLoginEnable
+    val isRegisterEnable: LiveData<Boolean> = _isLoginEnable
 
     fun checkLoginEnable() {
         _isLoginEnable.value = !username.value.isNullOrEmpty()
@@ -40,11 +40,11 @@ class RegisterViewModel : BaseViewModel() {
                 && password.value == repassword.value
     }
 
-    val isLoginSuccess = MutableLiveData<Boolean>()
+    val isRegisterSuccess = MutableLiveData<Boolean>()
 
     @ExperimentalCoroutinesApi
     @FlowPreview
-    fun login() = launchUI {
+    fun register() = launchUI {
         launchFlow {
             val username = username.value ?: ""
             val password = password.value ?: ""
@@ -65,7 +65,7 @@ class RegisterViewModel : BaseViewModel() {
                     DataSettings.username = username.value ?: ""
                     DataSettings.password = password.value ?: ""
                     DataSettings.saveAccount(it)
-                    isLoginSuccess.value = true
+                    isRegisterSuccess.value = true
                 }, {
                     uiLiveEvent.errorEvent.postValue(it)
                 })
@@ -81,6 +81,8 @@ class RegisterViewModel : BaseViewModel() {
         fun onRePasswordAfterTextChanged(editable: Editable)
 
         fun onLoginClick(view: View)
+
+        fun onRegisterClick(view: View)
 
     }
 }
