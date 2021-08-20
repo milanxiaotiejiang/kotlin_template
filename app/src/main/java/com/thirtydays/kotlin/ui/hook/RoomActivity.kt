@@ -63,7 +63,6 @@ class RoomRepository : BaseRepository() {
 
 class RoomActivity : BaseVmActivity<RoomViewModel, ActivityRoomBinding>(R.layout.activity_room) {
 
-
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mViewModel
         mViewModel.run {

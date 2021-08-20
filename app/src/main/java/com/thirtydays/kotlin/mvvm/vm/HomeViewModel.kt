@@ -16,10 +16,6 @@ class HomeViewModel : BaseViewModel() {
 
     private val mRepository: HomeRepository = HomeRepository()
 
-//    val accountData: MutableLiveData<AccountPO> by lazy {
-//        MutableLiveData<AccountPO>()
-//    }
-
     fun login(email: String, password: String) {
 //        launch(show = true) {
 //            val login = mRepository.login(email, password)

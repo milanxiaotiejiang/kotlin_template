@@ -1,9 +1,9 @@
 package com.thirtydays.kotlin.ui.main.home
 
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.graves.rubbishbag.startCommunicationThread
 import com.seabreeze.robot.base.ext.foundation.pop
 import com.seabreeze.robot.base.ui.fragment.BaseVmFragment
-import com.seabreeze.robot.data.DataApplication.Companion.okHttpClient
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.HomeAdapter
 import com.thirtydays.kotlin.databinding.FragmentHomeBinding
@@ -12,13 +12,9 @@ import com.thirtydays.kotlin.ui.ext.ExtActivity
 import com.thirtydays.kotlin.ui.glide.GlideActivity
 import com.thirtydays.kotlin.ui.hook.HookActivity
 import com.thirtydays.kotlin.ui.hook.RoomActivity
-import com.thirtydays.kotlin.ui.loadpage.CommodityActivity
 import com.thirtydays.kotlin.ui.simple.SimpleExampleActivity
-import okhttp3.Request
-import java.io.IOException
 
 class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout.fragment_home) {
-
 
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mViewModel
@@ -31,12 +27,12 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout
 
         val adapter = HomeAdapter(
             mutableListOf(
-                "retrofit 测试",
+                "单线程示例",
                 "room 测试",
                 "Java Hook",
                 "Ext 测试",
                 "刷新加载页面",
-                "Glide",
+                "Glide列表图库选择",
                 "极简单的页面请求"
             )
         )
@@ -50,24 +46,12 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout
         adapter.setOnItemClickListener { _, _, position ->
             when (position) {
                 0 -> {
-//                    mViewModel.login("765151629@qq.com", "123456")
-                    Thread {
-                        try {
-                            val request: Request = Request.Builder()
-                                .url("https://github.com/")
-                                .build()
-                            val response = okHttpClient.newCall(request).execute()
-                            val result = response.body!!.string()
-//                            XLog.e(request)
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                    }.start()
+                    startCommunicationThread()
                 }
                 1 -> pop<RoomActivity>()
                 2 -> pop<HookActivity>()
                 3 -> pop<ExtActivity>()
-                4 -> pop<CommodityActivity>()
+//                4 -> pop<CommodityActivity>()
                 5 -> pop<GlideActivity>()
                 6 -> pop<SimpleExampleActivity>()
             }
