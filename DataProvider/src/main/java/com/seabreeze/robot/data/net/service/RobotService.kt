@@ -1,7 +1,9 @@
 package com.seabreeze.robot.data.net.service
 
 import com.seabreeze.robot.base.model.BaseResult
+import com.seabreeze.robot.base.model.Pager
 import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
+import com.seabreeze.robot.data.net.bean.response.Article
 import com.seabreeze.robot.data.net.bean.response.UserInfo
 import retrofit2.http.*
 
@@ -40,5 +42,8 @@ interface RobotService {
 
     @GET("user/logout/json")
     suspend fun userLogout(): BaseResult<Any>
+
+    @GET("article/list/{page_no}/json")
+    suspend fun articleList(@Path("page_no") pageNo: Int): BaseResult<Pager<Article>>
 
 }

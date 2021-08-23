@@ -1,7 +1,9 @@
 package com.seabreeze.robot.data.net.api
 
 import com.seabreeze.robot.base.model.BaseResult
+import com.seabreeze.robot.base.model.Pager
 import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
+import com.seabreeze.robot.data.net.bean.response.Article
 import com.seabreeze.robot.data.net.bean.response.UserInfo
 
 /**
@@ -25,4 +27,5 @@ interface RobotAPI {
 
     suspend fun userLogout(): BaseResult<Any>
 
+    suspend fun getArticleList(pageNo: Int): BaseResult<Pager<Article>>
 }

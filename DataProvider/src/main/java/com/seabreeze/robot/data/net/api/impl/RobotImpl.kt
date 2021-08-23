@@ -27,4 +27,6 @@ class RobotImpl : BaseImpl<RobotService>(), RobotAPI {
 
     override suspend fun userLogout() = mService.userLogout()
 
+    override suspend fun getArticleList(pageNo: Int) = mService.articleList(pageNo)
+
 }

@@ -8,4 +8,6 @@
 
     <color name="colorBg">#EFF0F0</color>
 
+    <color name="textBody">#4f4f4f</color>
+
 </resources>

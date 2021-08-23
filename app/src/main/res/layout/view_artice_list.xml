@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thirtydays.kotlin.ui.article.list.ArticleListViewModel" />
+
+        <variable
+            name="handlers"
+            type="com.thirtydays.kotlin.ui.article.list.ArticleListViewModel.Handlers" />
+
+        <variable
+            name="viewState"
+            type="com.thirtydays.kotlin.ui.article.list.ArticleListViewModel.ArticleListViewState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:visible="@{viewState.listed}">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/article_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:itemDecorationSpacing="@{@dimen/margin_standard}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="1"
+            tools:listitem="@layout/item_article" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

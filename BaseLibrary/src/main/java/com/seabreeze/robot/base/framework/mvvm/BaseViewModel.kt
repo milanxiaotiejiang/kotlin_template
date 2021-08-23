@@ -8,12 +8,14 @@ import com.seabreeze.robot.base.ext.coroutine.ExceptionHandler
 import com.seabreeze.robot.base.ext.coroutine.SingleLiveEvent
 import com.seabreeze.robot.base.ext.coroutine.launchUI
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
+import com.seabreeze.robot.base.ext.foundation.dcEither
+import com.seabreeze.robot.base.model.BaseResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
-private typealias CommonCallback = suspend CoroutineScope.() -> Unit
+private typealias CompleteCallback = suspend CoroutineScope.() -> Unit
 private typealias ErrorCallback = suspend CoroutineScope.(BaseThrowable) -> Unit
 
 abstract class BaseViewModel : ViewModel() {
@@ -31,10 +33,10 @@ abstract class BaseViewModel : ViewModel() {
 
     fun <T> launch(
         uiState: UIState = UIState(),
-        block: suspend CoroutineScope.() -> T,
+        block: suspend CoroutineScope.() -> BaseResult<T>,
         success: (suspend CoroutineScope.(T) -> Unit)? = null,
         error: (ErrorCallback)? = null,
-        complete: (CommonCallback)? = null
+        complete: (CompleteCallback)? = null
     ) =
         with(uiState) {
             if (isShowLoadingProgressBar) uiLiveEvent.showLoadingProgressBarEvent.call()
@@ -47,7 +49,14 @@ abstract class BaseViewModel : ViewModel() {
                     },
                     success = { s ->
                         withContext(Dispatchers.Main) {
-                            success?.invoke(this, s)
+                            s.dcEither().fold({ t ->
+                                success?.invoke(this, t)
+                            }, { e ->
+                                if (isShowErrorToast) uiLiveEvent.errorEvent.postValue(e)
+                                if (isShowErrorView) _isShowErrorView.value = true
+                                error?.invoke(this, e)
+                            })
+
                         }
                     },
                     error = { e ->
@@ -76,11 +85,11 @@ abstract class BaseViewModel : ViewModel() {
      * @param error 失败回调
      * @param complete 完成回调（成功或者失败都会回调）
      */
-    suspend fun <T> handle(
+    private suspend fun <T> handle(
         block: suspend CoroutineScope.() -> T,
         success: suspend CoroutineScope.(T) -> Unit,
         error: ErrorCallback,
-        complete: CommonCallback
+        complete: CompleteCallback
     ) =
         coroutineScope {
             try {

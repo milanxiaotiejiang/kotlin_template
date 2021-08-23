@@ -18,7 +18,7 @@ import com.seabreeze.robot.base.model.BaseResult
 //    }.otherwise {
 //        Either.right(BaseThrowable.InsideThrowable(errorCode, errorMsg))
 //    }
-inline fun <reified T> BaseResult<T>.dcEither() =
+fun <T> BaseResult<T>.dcEither() =
     (errorCode == 0).yes {
         Either.left(data)
     }.otherwise {

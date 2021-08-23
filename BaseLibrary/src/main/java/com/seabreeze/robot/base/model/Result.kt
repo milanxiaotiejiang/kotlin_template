@@ -24,11 +24,11 @@ data class ListModel<T>(
 )
 
 data class Pager<T>(
-    val current: Int,
-    val pages: Int,
-    val records: List<T>,
-    val searchCount: Boolean,
+    val curPage: Int,
+    val datas: List<T>,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
     val size: Int,
-    val total: Int,
-    var pageTime: Long
+    val total: Int
 )

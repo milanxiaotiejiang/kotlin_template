@@ -49,4 +49,6 @@ class DataRepository private constructor() : RobotAPI, ImageAPI {
 
     override suspend fun userLogout() = sRobotImplement.userLogout()
 
+    override suspend fun getArticleList(pageNo: Int) = sRobotImplement.getArticleList(pageNo)
+
 }

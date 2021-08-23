@@ -39,13 +39,12 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/MainTheme" />
-        <activity android:name=".ui.message.MessageListActivity" />
         <activity android:name=".ui.hook.HookActivity" />
         <activity android:name=".ui.hook.RoomActivity" />
         <activity android:name=".ui.ext.ExtActivity" />
-        <activity android:name=".ui.loadpage.CommodityActivity" />
         <activity android:name=".ui.glide.GlideActivity" />
         <activity android:name=".ui.simple.SimpleExampleActivity" />
+        <activity android:name=".ui.article.list.ArticleListActivity" />
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.HomeAdapter
 import com.thirtydays.kotlin.databinding.FragmentHomeBinding
 import com.thirtydays.kotlin.mvvm.vm.HomeViewModel
+import com.thirtydays.kotlin.ui.article.list.ArticleListActivity
 import com.thirtydays.kotlin.ui.ext.ExtActivity
 import com.thirtydays.kotlin.ui.glide.GlideActivity
 import com.thirtydays.kotlin.ui.hook.HookActivity
@@ -51,7 +52,7 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout
                 1 -> pop<RoomActivity>()
                 2 -> pop<HookActivity>()
                 3 -> pop<ExtActivity>()
-//                4 -> pop<CommodityActivity>()
+                4 -> pop<ArticleListActivity>()
                 5 -> pop<GlideActivity>()
                 6 -> pop<SimpleExampleActivity>()
             }
