@@ -4,6 +4,7 @@
     <dimen name="common_title_bar_height">60dp</dimen>
     <dimen name="margin_standard">24dp</dimen>
     <dimen name="margin_standard_small">12dp</dimen>
+    <dimen name="margin_standard_small_small">6dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fab_margin">16dp</dimen>
 
