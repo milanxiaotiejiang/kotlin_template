@@ -9,13 +9,12 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 
 import com.elvishew.xlog.XLog;
+import com.seabreeze.robot.base.ext.foundation.DispatcherExecutor;
 import com.seabreeze.robot.base.ext.foundation.Platform;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * User: milan
@@ -35,8 +34,6 @@ public class AudioTracker {
     private AudioTrack mAudioTrack;
     // 状态
     private volatile Status mStatus = Status.STATUS_NO_READY;
-    // 单任务线程池
-    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
     private static class AudioTrackerHolder {
         private static final AudioTracker INSTANCE = new AudioTracker();
@@ -86,7 +83,7 @@ public class AudioTracker {
         if (mStatus == Status.STATUS_START) {
             throw new IllegalStateException("正在播放...");
         }
-        mExecutorService.execute(() -> {
+        DispatcherExecutor.INSTANCE.getCPUExecutor().execute(() -> {
             try {
                 playAudioData(file, listener);
             } catch (IOException e) {

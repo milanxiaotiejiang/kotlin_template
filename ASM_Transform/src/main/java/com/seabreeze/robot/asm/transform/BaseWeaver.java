@@ -73,7 +73,9 @@ public class BaseWeaver implements IWeaver {
     }
 
     public final void weaveSingleClassToFile(File inputFile, File outputFile, String inputBaseDir) throws IOException {
-        if (!inputBaseDir.endsWith(FILE_SEP)) inputBaseDir = inputBaseDir + FILE_SEP;
+        if (!inputBaseDir.endsWith(FILE_SEP)) {
+            inputBaseDir = inputBaseDir + FILE_SEP;
+        }
         if (isWeavableClass(inputFile.getAbsolutePath().replace(inputBaseDir, "").replace(FILE_SEP, "."))) {
             FileUtils.touch(outputFile);
             InputStream inputStream = new FileInputStream(inputFile);

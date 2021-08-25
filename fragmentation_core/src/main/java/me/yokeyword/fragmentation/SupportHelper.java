@@ -1,12 +1,12 @@
 package me.yokeyword.fragmentation;
 
 import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentationMagician;
-
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,9 @@ public class SupportHelper {
      * 显示软键盘
      */
     public static void showSoftInput(final View view) {
-        if (view == null || view.getContext() == null) return;
+        if (view == null || view.getContext() == null) {
+            return;
+        }
         final InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         view.requestFocus();
         view.postDelayed(new Runnable() {
@@ -40,7 +42,9 @@ public class SupportHelper {
      * 隐藏软键盘
      */
     public static void hideSoftInput(View view) {
-        if (view == null || view.getContext() == null) return;
+        if (view == null || view.getContext() == null) {
+            return;
+        }
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
@@ -68,13 +72,17 @@ public class SupportHelper {
 
     public static ISupportFragment getTopFragment(FragmentManager fragmentManager, int containerId) {
         List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(fragmentManager);
-        if (fragmentList == null) return null;
+        if (fragmentList == null) {
+            return null;
+        }
 
         for (int i = fragmentList.size() - 1; i >= 0; i--) {
             Fragment fragment = fragmentList.get(i);
             if (fragment instanceof ISupportFragment) {
                 ISupportFragment iFragment = (ISupportFragment) fragment;
-                if (containerId == 0) return iFragment;
+                if (containerId == 0) {
+                    return iFragment;
+                }
 
                 if (containerId == iFragment.getSupportDelegate().mContainerId) {
                     return iFragment;
@@ -91,10 +99,14 @@ public class SupportHelper {
      */
     public static ISupportFragment getPreFragment(Fragment fragment) {
         FragmentManager fragmentManager = fragment.getFragmentManager();
-        if (fragmentManager == null) return null;
+        if (fragmentManager == null) {
+            return null;
+        }
 
         List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(fragmentManager);
-        if (fragmentList == null) return null;
+        if (fragmentList == null) {
+            return null;
+        }
 
         int index = fragmentList.indexOf(fragment);
         for (int i = index - 1; i >= 0; i--) {
@@ -138,7 +150,9 @@ public class SupportHelper {
 
         if (toFragmentTag == null) {
             List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(fragmentManager);
-            if (fragmentList == null) return null;
+            if (fragmentList == null) {
+                return null;
+            }
 
             int sizeChildFrgList = fragmentList.size();
 
@@ -151,7 +165,9 @@ public class SupportHelper {
             }
         } else {
             fragment = fragmentManager.findFragmentByTag(toFragmentTag);
-            if (fragment == null) return null;
+            if (fragment == null) {
+                return null;
+            }
         }
         return (T) fragment;
     }
@@ -190,7 +206,9 @@ public class SupportHelper {
             Fragment fragment = fragmentManager.findFragmentByTag(entry.getName());
             if (fragment instanceof ISupportFragment) {
                 ISupportFragment supportFragment = (ISupportFragment) fragment;
-                if (containerId == 0) return supportFragment;
+                if (containerId == 0) {
+                    return supportFragment;
+                }
 
                 if (containerId == supportFragment.getSupportDelegate().mContainerId) {
                     return supportFragment;
@@ -226,7 +244,9 @@ public class SupportHelper {
         List<Fragment> willPopFragments = new ArrayList<>();
 
         List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(fm);
-        if (fragmentList == null) return willPopFragments;
+        if (fragmentList == null) {
+            return willPopFragments;
+        }
 
         int size = fragmentList.size();
 
@@ -242,7 +262,9 @@ public class SupportHelper {
             }
         }
 
-        if (startIndex == -1) return willPopFragments;
+        if (startIndex == -1) {
+            return willPopFragments;
+        }
 
         for (int i = size - 1; i >= startIndex; i--) {
             Fragment fragment = fragmentList.get(i);

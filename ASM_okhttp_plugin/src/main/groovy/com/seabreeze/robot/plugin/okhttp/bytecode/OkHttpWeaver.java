@@ -21,7 +21,9 @@ public final class OkHttpWeaver extends BaseWeaver {
 
     @Override
     public void setExtension(Object extension) {
-        if (extension == null) return;
+        if (extension == null) {
+            return;
+        }
         this.okHttpRobotExtension = (OkHttpRobotExtension) extension;
     }
 

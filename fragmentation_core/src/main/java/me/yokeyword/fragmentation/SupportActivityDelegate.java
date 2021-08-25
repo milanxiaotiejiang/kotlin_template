@@ -1,15 +1,16 @@
 package me.yokeyword.fragmentation;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import android.view.MotionEvent;
-
 import androidx.fragment.app.FragmentationMagician;
+
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation.debug.DebugStackDelegate;
@@ -28,8 +29,9 @@ public class SupportActivityDelegate {
     private DebugStackDelegate mDebugStackDelegate;
 
     public SupportActivityDelegate(ISupportActivity support) {
-        if (!(support instanceof FragmentActivity))
+        if (!(support instanceof FragmentActivity)) {
             throw new RuntimeException("Must extends FragmentActivity/AppCompatActivity");
+        }
         this.mSupport = support;
         this.mActivity = (FragmentActivity) support;
         this.mDebugStackDelegate = new DebugStackDelegate(this.mActivity);
@@ -154,7 +156,9 @@ public class SupportActivityDelegate {
 
                 // 获取activeFragment:即从栈顶开始 状态为show的那个Fragment
                 ISupportFragment activeFragment = SupportHelper.getActiveFragment(getSupportFragmentManager());
-                if (mTransactionDelegate.dispatchBackPressedEvent(activeFragment)) return;
+                if (mTransactionDelegate.dispatchBackPressedEvent(activeFragment)) {
+                    return;
+                }
 
                 mSupport.onBackPressedSupport();
             }

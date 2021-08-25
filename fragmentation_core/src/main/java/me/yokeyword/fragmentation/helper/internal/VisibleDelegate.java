@@ -3,13 +3,14 @@ package me.yokeyword.fragmentation.helper.internal;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentationMagician;
 
 import java.util.List;
 
-import androidx.fragment.app.FragmentationMagician;
 import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
@@ -152,7 +153,9 @@ public class VisibleDelegate {
 
     private void safeDispatchUserVisibleHint(boolean visible) {
         if (mIsFirstVisible) {
-            if (!visible) return;
+            if (!visible) {
+                return;
+            }
             enqueueDispatchVisible();
         } else {
             dispatchSupportVisible(visible);
@@ -171,7 +174,9 @@ public class VisibleDelegate {
     }
 
     private void dispatchSupportVisible(boolean visible) {
-        if (visible && isParentInvisible()) return;
+        if (visible && isParentInvisible()) {
+            return;
+        }
 
         if (mIsSupportVisible == visible) {
             mNeedDispatch = true;
@@ -181,7 +186,9 @@ public class VisibleDelegate {
         mIsSupportVisible = visible;
 
         if (visible) {
-            if (checkAddState()) return;
+            if (checkAddState()) {
+                return;
+            }
             mSupportF.onSupportVisible();
 
             if (mIsFirstVisible) {
@@ -199,7 +206,9 @@ public class VisibleDelegate {
         if (!mNeedDispatch) {
             mNeedDispatch = true;
         } else {
-            if (checkAddState()) return;
+            if (checkAddState()) {
+                return;
+            }
             FragmentManager fragmentManager = mFragment.getChildFragmentManager();
             List<Fragment> childFragments = FragmentationMagician.getActiveFragments(fragmentManager);
             if (childFragments != null) {

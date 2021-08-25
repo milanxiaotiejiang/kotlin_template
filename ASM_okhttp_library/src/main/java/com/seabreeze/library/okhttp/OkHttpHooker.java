@@ -22,6 +22,7 @@ import okhttp3.Interceptor;
 public class OkHttpHooker {
 
     public static EventListener.Factory globalEventFactory = new EventListener.Factory() {
+        @Override
         @NotNull
         public EventListener create(@NotNull Call call) {
             return EventListener.NONE;
@@ -43,13 +44,15 @@ public class OkHttpHooker {
     }
 
     public static void installInterceptor(Interceptor interceptor) {
-        if (interceptor != null)
+        if (interceptor != null) {
             globalInterceptors.add(interceptor);
+        }
     }
 
     public static void installNetworkInterceptors(Interceptor networkInterceptor) {
-        if (networkInterceptor != null)
+        if (networkInterceptor != null) {
             globalNetworkInterceptors.add(networkInterceptor);
+        }
     }
 
 }

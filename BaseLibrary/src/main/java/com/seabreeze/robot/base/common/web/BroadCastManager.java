@@ -197,7 +197,7 @@ public class BroadCastManager {
         for (WebViewListener listener : listeners) {
             listener.onDownloadStart(intent.getStringExtra(EXTRA_URL),
                     intent.getStringExtra(EXTRA_USER_AGENT), intent.getStringExtra(EXTRA_CONTENT_DISPOSITION),
-                    intent.getStringExtra(EXTRA_MIME_TYPE), intent.getLongExtra(EXTRA_CONTENT_LENGTH, 0l));
+                    intent.getStringExtra(EXTRA_MIME_TYPE), intent.getLongExtra(EXTRA_CONTENT_LENGTH, 0L));
         }
     }
 

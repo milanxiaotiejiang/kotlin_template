@@ -3,7 +3,6 @@ package me.yokeyword.fragmentation.debug;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
@@ -68,14 +69,18 @@ public class DebugHierarchyViewContainer extends ScrollView {
         LinearLayout ll = getTitleLayout();
         mLinearLayout.addView(ll);
 
-        if (fragmentRecords == null) return;
+        if (fragmentRecords == null) {
+            return;
+        }
 
         DebugHierarchyViewContainer.this.setView(fragmentRecords, 0, null);
     }
 
     @NonNull
     private LinearLayout getTitleLayout() {
-        if (mTitleLayout != null) return mTitleLayout;
+        if (mTitleLayout != null) {
+            return mTitleLayout;
+        }
 
         mTitleLayout = new LinearLayout(mContext);
         mTitleLayout.setPadding(dip2px(24), dip2px(24), 0, dip2px(8));

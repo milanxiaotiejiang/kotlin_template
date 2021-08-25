@@ -9,15 +9,16 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentationMagician;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import me.yokeyword.fragmentation.exception.AfterSaveStateTransactionWarning;
 import me.yokeyword.fragmentation.helper.internal.ResultRecord;
 import me.yokeyword.fragmentation.helper.internal.TransactionRecord;
@@ -154,8 +155,9 @@ class TransactionDelegate {
             @Override
             public void run() {
                 ISupportFragment top = getTopFragmentForStart(from, fm);
-                if (top == null)
+                if (top == null) {
                     throw new NullPointerException("There is no Fragment in the FragmentManager, maybe you need to call loadRootFragment() first!");
+                }
 
                 int containerId = top.getSupportDelegate().mContainerId;
                 bindContainerId(containerId, to);
@@ -188,13 +190,16 @@ class TransactionDelegate {
                 List<Fragment> willPopFragments = SupportHelper.getWillPopFragments(fm, fragmentTag, includeTargetFragment);
 
                 final ISupportFragment top = getTopFragmentForStart(from, fm);
-                if (top == null)
+                if (top == null) {
                     throw new NullPointerException("There is no Fragment in the FragmentManager, maybe you need to call loadRootFragment() first!");
+                }
 
                 int containerId = top.getSupportDelegate().mContainerId;
                 bindContainerId(containerId, to);
 
-                if (willPopFragments.size() <= 0) return;
+                if (willPopFragments.size() <= 0) {
+                    return;
+                }
 
                 handleAfterSaveInStateTransactionException(fm, "startWithPopTo()");
                 FragmentationMagician.executePendingTransactionsAllowingStateLoss(fm);
@@ -315,9 +320,13 @@ class TransactionDelegate {
     void handleResultRecord(Fragment from) {
         try {
             Bundle args = from.getArguments();
-            if (args == null) return;
+            if (args == null) {
+                return;
+            }
             final ResultRecord resultRecord = args.getParcelable(FRAGMENTATION_ARG_RESULT_RECORD);
-            if (resultRecord == null) return;
+            if (resultRecord == null) {
+                return;
+            }
 
             ISupportFragment targetFragment = (ISupportFragment) from.getFragmentManager().getFragment(from.getArguments(), FRAGMENTATION_STATE_SAVE_RESULT);
             targetFragment.onFragmentResult(resultRecord.requestCode, resultRecord.resultCode, resultRecord.resultBundle);
@@ -372,7 +381,9 @@ class TransactionDelegate {
             }
         }
 
-        if (handleLaunchMode(fm, from, to, toFragmentTag, launchMode)) return;
+        if (handleLaunchMode(fm, from, to, toFragmentTag, launchMode)) {
+            return;
+        }
 
         start(fm, from, to, toFragmentTag, dontAddToBackStack, sharedElementList, false, type);
     }
@@ -448,7 +459,9 @@ class TransactionDelegate {
     }
 
     private void doShowHideFragment(FragmentManager fm, ISupportFragment showFragment, ISupportFragment hideFragment) {
-        if (showFragment == hideFragment) return;
+        if (showFragment == hideFragment) {
+            return;
+        }
 
         FragmentTransaction ft = fm.beginTransaction().show((Fragment) showFragment);
 
@@ -487,9 +500,13 @@ class TransactionDelegate {
     }
 
     private boolean handleLaunchMode(FragmentManager fm, ISupportFragment topFragment, final ISupportFragment to, String toFragmentTag, int launchMode) {
-        if (topFragment == null) return false;
+        if (topFragment == null) {
+            return false;
+        }
         final ISupportFragment stackToFragment = SupportHelper.findBackStackFragment(to.getClass(), toFragmentTag, fm);
-        if (stackToFragment == null) return false;
+        if (stackToFragment == null) {
+            return false;
+        }
 
         if (launchMode == ISupportFragment.SINGLETOP) {
             if (to == topFragment || to.getClass().getName().equals(topFragment.getClass().getName())) {
@@ -552,7 +569,9 @@ class TransactionDelegate {
         }
 
         List<Fragment> willPopFragments = SupportHelper.getWillPopFragments(fm, targetFragmentTag, includeTargetFragment);
-        if (willPopFragments.size() <= 0) return;
+        if (willPopFragments.size() <= 0) {
+            return;
+        }
 
         Fragment top = willPopFragments.get(0);
         mockPopToAnim(top, targetFragmentTag, fm, flag, willPopFragments, popAnim);
@@ -581,10 +600,14 @@ class TransactionDelegate {
 
         final ISupportFragment fromSupport = (ISupportFragment) from;
         final ViewGroup container = findContainerById(from, fromSupport.getSupportDelegate().mContainerId);
-        if (container == null) return;
+        if (container == null) {
+            return;
+        }
 
         final View fromView = from.getView();
-        if (fromView == null) return;
+        if (fromView == null) {
+            return;
+        }
 
         container.removeViewInLayout(fromView);
         final ViewGroup mock = addMockView(fromView, container);
@@ -622,10 +645,14 @@ class TransactionDelegate {
     private void mockStartWithPopAnim(final ISupportFragment from, ISupportFragment to, final Animation exitAnim) {
         final Fragment fromF = (Fragment) from;
         final ViewGroup container = findContainerById(fromF, from.getSupportDelegate().mContainerId);
-        if (container == null) return;
+        if (container == null) {
+            return;
+        }
 
         final View fromView = fromF.getView();
-        if (fromView == null) return;
+        if (fromView == null) {
+            return;
+        }
 
         container.removeViewInLayout(fromView);
         final ViewGroup mock = addMockView(fromView, container);
@@ -663,7 +690,9 @@ class TransactionDelegate {
     }
 
     private ViewGroup findContainerById(Fragment fragment, int containerId) {
-        if (fragment.getView() == null) return null;
+        if (fragment.getView() == null) {
+            return null;
+        }
 
         View container;
         Fragment parentFragment = fragment.getParentFragment();

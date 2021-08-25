@@ -5,11 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -19,10 +14,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentationMagician;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.FragmentationMagician;
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.R;
@@ -41,7 +42,9 @@ public class DebugStackDelegate implements SensorEventListener {
     }
 
     public void onCreate(int mode) {
-        if (mode != Fragmentation.SHAKE) return;
+        if (mode != Fragmentation.SHAKE) {
+            return;
+        }
         mSensorManager = (SensorManager) mActivity.getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(this,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -49,7 +52,9 @@ public class DebugStackDelegate implements SensorEventListener {
     }
 
     public void onPostCreate(int mode) {
-        if (mode != Fragmentation.BUBBLE) return;
+        if (mode != Fragmentation.BUBBLE) {
+            return;
+        }
         View root = mActivity.findViewById(android.R.id.content);
         if (root instanceof FrameLayout) {
             FrameLayout content = (FrameLayout) root;
@@ -98,7 +103,9 @@ public class DebugStackDelegate implements SensorEventListener {
      * 调试相关:以dialog形式 显示 栈视图
      */
     public void showFragmentStackHierarchyView() {
-        if (mStackDialog != null && mStackDialog.isShowing()) return;
+        if (mStackDialog != null && mStackDialog.isShowing()) {
+            return;
+        }
         DebugHierarchyViewContainer container = new DebugHierarchyViewContainer(mActivity);
         container.bindFragmentRecords(getFragmentRecords());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -115,7 +122,9 @@ public class DebugStackDelegate implements SensorEventListener {
      */
     public void logFragmentRecords(String tag) {
         List<DebugFragmentRecord> fragmentRecordList = getFragmentRecords();
-        if (fragmentRecordList == null) return;
+        if (fragmentRecordList == null) {
+            return;
+        }
 
         StringBuilder sb = new StringBuilder();
 
@@ -149,7 +158,9 @@ public class DebugStackDelegate implements SensorEventListener {
 
         List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(mActivity.getSupportFragmentManager());
 
-        if (fragmentList == null || fragmentList.size() < 1) return null;
+        if (fragmentList == null || fragmentList.size() < 1) {
+            return null;
+        }
 
         for (Fragment fragment : fragmentList) {
             addDebugFragmentRecord(fragmentRecordList, fragment);
@@ -158,7 +169,9 @@ public class DebugStackDelegate implements SensorEventListener {
     }
 
     private void processChildLog(List<DebugFragmentRecord> fragmentRecordList, StringBuilder sb, int childHierarchy) {
-        if (fragmentRecordList == null || fragmentRecordList.size() == 0) return;
+        if (fragmentRecordList == null || fragmentRecordList.size() == 0) {
+            return;
+        }
 
         for (int j = 0; j < fragmentRecordList.size(); j++) {
             DebugFragmentRecord childFragmentRecord = fragmentRecordList.get(j);
@@ -183,7 +196,9 @@ public class DebugStackDelegate implements SensorEventListener {
         List<DebugFragmentRecord> fragmentRecords = new ArrayList<>();
 
         List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(parentFragment.getChildFragmentManager());
-        if (fragmentList == null || fragmentList.size() < 1) return null;
+        if (fragmentList == null || fragmentList.size() < 1) {
+            return null;
+        }
 
         for (int i = fragmentList.size() - 1; i >= 0; i--) {
             Fragment fragment = fragmentList.get(i);

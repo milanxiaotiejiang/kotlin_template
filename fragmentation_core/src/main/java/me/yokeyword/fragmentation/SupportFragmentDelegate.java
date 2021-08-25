@@ -59,8 +59,9 @@ public class SupportFragmentDelegate {
     private boolean mRootViewClickable;
 
     public SupportFragmentDelegate(ISupportFragment support) {
-        if (!(support instanceof Fragment))
+        if (!(support instanceof Fragment)) {
             throw new RuntimeException("Must extends Fragment");
+        }
         this.mSupportF = support;
         this.mFragment = (Fragment) support;
     }
@@ -70,8 +71,9 @@ public class SupportFragmentDelegate {
      * 额外的事务：自定义Tag，添加SharedElement动画，操作非回退栈Fragment
      */
     public ExtraTransaction extraTransaction() {
-        if (mTransactionDelegate == null)
+        if (mTransactionDelegate == null) {
             throw new RuntimeException(mFragment.getClass().getSimpleName() + " not attach!");
+        }
 
         return new ExtraTransaction.ExtraTransactionImpl<>((FragmentActivity) mSupport, mSupportF, mTransactionDelegate, false);
     }
@@ -113,7 +115,9 @@ public class SupportFragmentDelegate {
         mAnimHelper = new AnimatorHelper(_mActivity.getApplicationContext(), mFragmentAnimator);
 
         final Animation enter = getEnterAnim();
-        if (enter == null) return;
+        if (enter == null) {
+            return;
+        }
 
         getEnterAnim().setAnimationListener(new Animation.AnimationListener() {
 
@@ -313,8 +317,9 @@ public class SupportFragmentDelegate {
      * @return FragmentAnimator
      */
     public FragmentAnimator getFragmentAnimator() {
-        if (mSupport == null)
+        if (mSupport == null) {
             throw new RuntimeException("Fragment has not been attached to Activity!");
+        }
 
         if (mFragmentAnimator == null) {
             mFragmentAnimator = mSupportF.onCreateFragmentAnimator();
@@ -403,7 +408,9 @@ public class SupportFragmentDelegate {
      */
     public void hideSoftInput() {
         Activity activity = mFragment.getActivity();
-        if (activity == null) return;
+        if (activity == null) {
+            return;
+        }
         View view = activity.getWindow().getDecorView();
         SupportHelper.hideSoftInput(view);
     }
@@ -583,14 +590,22 @@ public class SupportFragmentDelegate {
     private Runnable mNotifyEnterAnimEndRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mFragment == null) return;
+            if (mFragment == null) {
+                return;
+            }
             mSupportF.onEnterAnimationEnd(mSaveInstanceState);
 
-            if (mRootViewClickable) return;
+            if (mRootViewClickable) {
+                return;
+            }
             final View view = mFragment.getView();
-            if (view == null) return;
+            if (view == null) {
+                return;
+            }
             ISupportFragment preFragment = SupportHelper.getPreFragment(mFragment);
-            if (preFragment == null) return;
+            if (preFragment == null) {
+                return;
+            }
 
             long prePopExitDuration = preFragment.getSupportDelegate().getPopExitAnimDuration();
             long enterDuration = getEnterAnimDuration();

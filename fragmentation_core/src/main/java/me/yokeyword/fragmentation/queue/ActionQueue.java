@@ -23,7 +23,9 @@ public class ActionQueue {
     }
 
     public void enqueue(final Action action) {
-        if (isThrottleBACK(action)) return;
+        if (isThrottleBACK(action)) {
+            return;
+        }
 
         if (action.action == Action.ACTION_LOAD && mQueue.isEmpty()
                 && Thread.currentThread() == Looper.getMainLooper().getThread()) {
@@ -47,7 +49,9 @@ public class ActionQueue {
     }
 
     private void handleAction() {
-        if (mQueue.isEmpty()) return;
+        if (mQueue.isEmpty()) {
+            return;
+        }
 
         Action action = mQueue.peek();
         action.run();
