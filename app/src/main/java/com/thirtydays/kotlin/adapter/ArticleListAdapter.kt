@@ -1,13 +1,12 @@
 package com.thirtydays.kotlin.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.seabreeze.robot.base.common.adapter.BaseListAdapter
-import com.seabreeze.robot.base.common.adapter.BaseViewHolder
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.seabreeze.robot.base.ext.tool.getResColor
 import com.seabreeze.robot.data.net.bean.response.Article
+import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.databinding.ItemArticleBinding
+import kotlin.random.Random
 
 /**
  * <pre>
@@ -18,58 +17,43 @@ import com.thirtydays.kotlin.databinding.ItemArticleBinding
  * @description : TODO
  * </pre>
  */
-class ArticleListAdapter : BaseListAdapter<Article>(
-    itemsSame = { old, new -> old.id == new.id },
-    contentsSame = { old, new -> old == new }
-) {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        inflater: LayoutInflater,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return ArticleListViewHolder(inflater)
+class ArticleListAdapter :
+    BaseQuickAdapter<Article, BaseDataBindingHolder<ItemArticleBinding>>(R.layout.item_article) {
 
-    }
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
+    override fun convert(
+        holder: BaseDataBindingHolder<ItemArticleBinding>,
+        item: Article,
+        payloads: List<Any>
     ) {
-        super.onBindViewHolder(holder, position, payloads)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is ArticleListViewHolder -> holder.bind(getItem(position))
+        holder.dataBinding?.run {
+            payloads.forEach { payload ->
+                with(payload) {
+                    if (payload is String) {
+                        when (this) {
+                            CHANGE_COLOR -> {
+                                val nextInt = Random.nextInt(colors.size)
+                                val colorInt = colors[nextInt]
+                                tvTitle.setBackgroundColor(getResColor(colorInt))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-}
 
-class ArticleListViewHolder(
-    inflater: LayoutInflater
-) : BaseViewHolder<ItemArticleBinding>(
-    binding = ItemArticleBinding.inflate(inflater)
-) {
-    fun bind(article: Article) {
-        binding.article = article
-        binding.executePendingBindings()
+    override fun convert(holder: BaseDataBindingHolder<ItemArticleBinding>, item: Article) {
+        holder.dataBinding?.article = item
     }
-}
 
-class ArticleListTouchHelper constructor(
-    private val onSwiped: ((Int) -> Unit)
-) : ItemTouchHelper.SimpleCallback(
-    ItemTouchHelper.ACTION_STATE_IDLE,
-    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-) {
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ) = true
+    companion object {
+        const val CHANGE_COLOR = "change_color"
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        onSwiped(viewHolder.adapterPosition)
+        val colors = mutableListOf(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_dark,
+            android.R.color.holo_green_dark
+        )
     }
 }

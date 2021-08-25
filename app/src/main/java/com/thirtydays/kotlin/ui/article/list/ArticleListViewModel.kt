@@ -5,8 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
 import com.seabreeze.robot.base.framework.mvvm.UIState
-import com.seabreeze.robot.data.DataApplication
+import com.seabreeze.robot.data.DataApplication.Companion.dataRepository
+import com.seabreeze.robot.data.common.Common.Companion.PAGE_NO_START
+import com.seabreeze.robot.data.common.Common.Companion.PAGE_SIZE
+import com.seabreeze.robot.data.ext.SmartRefreshViewState
 import com.seabreeze.robot.data.net.bean.response.Article
+import com.thirtydays.kotlin.R
+import com.thirtydays.kotlin.adapter.ArticleListAdapter
 
 /**
  * <pre>
@@ -19,37 +24,75 @@ import com.seabreeze.robot.data.net.bean.response.Article
  */
 class ArticleListViewModel : BaseViewModel() {
 
-    val data = MutableLiveData<List<Article>>()
+    val viewAdapter: ArticleListAdapter by lazy {
+        ArticleListAdapter()
+            .apply {
+                addChildClickViewIds(R.id.tv_title)
+                setOnItemChildClickListener { _, view, position ->
+                    when (view.id) {
+                        R.id.tv_title -> notifyItemChanged(
+                            position,
+                            ArticleListAdapter.CHANGE_COLOR
+                        )
+                    }
+                }
+            }
+    }
 
-    val state = Transformations.map(data) {
+    private val _data = MutableLiveData<List<Article>>()
+    val state = Transformations.map(_data) {
         if (it.isEmpty())
             ArticleListViewState.Empty
         else
             ArticleListViewState.Listed
     }
 
-    fun loadArticleList() {
+    private var mPageNo = 0
+    val viewState = MutableLiveData<SmartRefreshViewState>()
+
+    val enableLoadMore = MutableLiveData<Boolean>().apply {
+        postValue(true)
+    }
+
+    fun refresh() {
+        loadArticleList(true)
+    }
+
+    fun loadMore() {
+        loadArticleList(false)
+    }
+
+    fun loadArticleList(isRefresh: Boolean) {
+        mPageNo = if (isRefresh) PAGE_NO_START else mPageNo + 1
+
         launch(
             uiState = UIState(
                 isShowLoadingProgressBar = true,
                 isShowLoadingView = true,
-                isShowErrorView = true,
                 isShowErrorToast = true
             ),
             block = {
-                DataApplication.dataRepository.getArticleList(0)
+                dataRepository.getArticleList(mPageNo)
             },
             success = {
-                data.postValue(it.datas)
+                it.datas.run {
+                    viewState.postValue(SmartRefreshViewState(isRefresh, true))
+                    enableLoadMore.postValue(size >= PAGE_SIZE)
+                    if (isRefresh) viewAdapter.setList(this)
+                    else viewAdapter.addData(this)
+                }
+            },
+            error = {
+                viewState.postValue(
+                    SmartRefreshViewState(isRefresh, isSuccess = false)
+                )
+            },
+            complete = {
+                _data.postValue(viewAdapter.data)
             }
         )
 
     }
-
-    fun removeFavoriteCharacter(article: Article) {
-
-    }
-
 
     interface Handlers {
         fun onEmptyClick(view: View)

@@ -3,6 +3,7 @@ package com.thirtydays.kotlin.ui.main.home
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.graves.rubbishbag.startCommunicationThread
 import com.seabreeze.robot.base.ext.foundation.pop
+import com.seabreeze.robot.base.ext.tool.toast
 import com.seabreeze.robot.base.ui.fragment.BaseVmFragment
 import com.thirtydays.kotlin.R
 import com.thirtydays.kotlin.adapter.HomeAdapter
@@ -47,6 +48,7 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(R.layout
         adapter.setOnItemClickListener { _, _, position ->
             when (position) {
                 0 -> {
+                    toast { "查看logcat" }
                     startCommunicationThread()
                 }
                 1 -> pop<RoomActivity>()

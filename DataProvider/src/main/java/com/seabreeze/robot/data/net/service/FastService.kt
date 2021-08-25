@@ -1,5 +1,9 @@
 package com.seabreeze.robot.data.net.service
 
+import com.seabreeze.robot.base.model.BaseResult
+import com.seabreeze.robot.data.net.bean.response.Banner
+import retrofit2.http.GET
+
 /**
  * <pre>
  * @user : milanxiaotiejiang
@@ -11,4 +15,6 @@ package com.seabreeze.robot.data.net.service
  */
 interface FastService {
 
+    @GET("banner/json")
+    suspend fun banner(): BaseResult<List<Banner>>
 }

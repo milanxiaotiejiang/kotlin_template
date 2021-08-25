@@ -31,6 +31,16 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         setScreenPortrait()
         //滑动返回
         initSwipeBackFinish()
+    }
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
+        //屏幕设置
+        initImmersionUi()
+    }
+
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
         //屏幕设置
         initImmersionUi()
     }

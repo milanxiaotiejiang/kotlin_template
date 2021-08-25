@@ -1,5 +1,6 @@
 package com.seabreeze.robot.data.net.api.impl
 
+import com.seabreeze.robot.data.common.Common.Companion.PAGE_SIZE
 import com.seabreeze.robot.data.net.BaseImpl
 import com.seabreeze.robot.data.net.api.RobotAPI
 import com.seabreeze.robot.data.net.bean.request.UserLoginRequest
@@ -27,6 +28,6 @@ class RobotImpl : BaseImpl<RobotService>(), RobotAPI {
 
     override suspend fun userLogout() = mService.userLogout()
 
-    override suspend fun getArticleList(pageNo: Int) = mService.articleList(pageNo)
+    override suspend fun getArticleList(pageNo: Int) =  mService.articleList(pageNo, PAGE_SIZE)
 
 }

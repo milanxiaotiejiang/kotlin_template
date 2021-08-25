@@ -44,6 +44,9 @@ interface RobotService {
     suspend fun userLogout(): BaseResult<Any>
 
     @GET("article/list/{page_no}/json")
-    suspend fun articleList(@Path("page_no") pageNo: Int): BaseResult<Pager<Article>>
+    suspend fun articleList(
+        @Path("page_no") pageNo: Int,
+        @Query("page_size") pageSize: Int
+    ): BaseResult<Pager<Article>>
 
 }

@@ -7,7 +7,19 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import kotlin.math.ceil
+
+@BindingAdapter(
+    value = ["adapter"],
+    requireAll = false
+)
+fun <T, VH : BaseViewHolder> RecyclerView.setAdapter(
+    adapter: BaseQuickAdapter<T, VH>?
+) {
+    setAdapter(adapter)
+}
 
 @BindingAdapter("itemDecorationSpacing")
 fun RecyclerView.setItemDecorationSpacing(spacingPx: Float) {

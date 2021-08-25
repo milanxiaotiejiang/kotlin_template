@@ -22,6 +22,10 @@ class Common {
         const val WX = "WX"
 
         const val SYNTHESIZER_AUE_PARAM = 6
+
+
+        const val PAGE_NO_START = 1
+        const val PAGE_SIZE = 5
     }
 
 }

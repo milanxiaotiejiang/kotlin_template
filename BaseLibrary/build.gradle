@@ -293,6 +293,9 @@ dependencies {
     api 'org.aspectj:aspectjrt:1.9.5'
     //epic https://github.com/tiann/epic/blob/master/README_cn.md
     api 'me.weishu:epic:0.6.0'
+
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0'
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0'
 }
 
 import org.aspectj.bridge.IMessage

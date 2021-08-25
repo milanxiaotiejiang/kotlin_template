@@ -5,20 +5,19 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chad.library.adapter.base.module.LoadMoreModuleConfig
 import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
 import com.elvishew.xlog.printer.AndroidPrinter
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.seabreeze.robot.base.common.Settings.language_status
 import com.seabreeze.robot.base.ext.initWebViewDataDirectory
 import com.seabreeze.robot.base.hook.epic.initHookImageView
 import com.seabreeze.robot.base.hook.epic.initHookThread
-import com.seabreeze.robot.base.widget.loadpage.CustomLoadMoreView
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import me.jessyan.autosize.AutoSize
@@ -87,7 +86,10 @@ open class BaseApplication : MultiDexApplication() {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             ClassicsHeader(context)
         }
-        LoadMoreModuleConfig.defLoadMoreView = CustomLoadMoreView()
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
+            ClassicsFooter(context)
+        }
     }
 
 }
