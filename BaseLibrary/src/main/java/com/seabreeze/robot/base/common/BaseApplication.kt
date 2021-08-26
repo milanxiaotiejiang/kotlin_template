@@ -96,6 +96,8 @@ open class BaseApplication : MultiDexApplication() {
 
 object AppContext : ContextWrapper(INSTANCE)
 
+val AppApplication = INSTANCE
+
 object CommonHelper {
     lateinit var context: Context
 }
